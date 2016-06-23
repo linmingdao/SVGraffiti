@@ -1,0 +1,293 @@
+/** {*/
+/*margin: 0;*/
+/*padding: 0;*/
+/*}*/
+
+html, body {
+    background-color: #000000;
+}
+
+.graffiti_wrap {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #ECECEC;
+    position: relative;
+}
+
+.panel_wrap {
+    display: block;
+    /*宽度通过脚本做兼容性处理*/
+    height: 100%;
+    float: left;
+    cursor: pointer;
+    position: relative;
+}
+
+.panel_wrap:before {
+    content: "";
+    position: absolute;
+    border: 0px solid blueviolet;
+    left: -0px;
+    right: -0px;
+    top: -0px;
+    bottom: -0px;
+}
+
+/*toolbar style*/
+.toolbar {
+    /*宽度通过脚本做兼容性处理*/
+    height: 100%;
+    float: right;
+    /*vertical-align: top;*/
+    /*-webkit-box-sizing: border-box;*/
+    /*-moz-box-sizing: border-box;*/
+    /*box-sizing: border-box;*/
+    /*border: 1px solid red;*/
+}
+
+.graffiti_panel {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+}
+
+/*tool btn global style*/
+.color_btn {
+    margin: 11px auto;
+    border: 5px solid #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+
+.color_btn:hover {
+    -webkit-box-shadow: 0 0 10px #0CC;
+    -moz-box-shadow: 0 0 10px #0CC;
+    box-shadow: 0 0 10px #0CC;
+}
+
+.color_btn_selected {
+    box-shadow: -3px 0 10px red, /*左边阴影*/ 3px 0 10px yellow, /*右边阴影*/ 0 -3px 10px blue, /*顶部阴影*/ 0 3px 10px green; /*底边阴影*/
+}
+
+/*in idle btn style*/
+.in_idle {
+    background-image: url("../img/question.svg");
+}
+
+/*tool icon style*/
+.color_picker_toggle_btn {
+    background-image: url("../img/color.svg");
+}
+
+.solid_line_btn {
+    background-image: url("../img/solidLine.svg");
+}
+
+.polygon_btn {
+    background-image: url("../img/polygon.svg");
+}
+
+.save_as_image_btn {
+    background-image: url("../img/save_as_image.svg");
+}
+
+.square_btn {
+    background-image: url("../img/square.svg");
+}
+
+.circle_btn {
+    background-image: url("../img/circle.svg");
+}
+
+.dash_line_btn {
+    background-image: url("../img/dashLine.svg");
+}
+
+.triangle_btn {
+    background-image: url("../img/triangle.svg");
+}
+
+.pen_btn {
+    background-image: url("../img/pen.svg");
+}
+
+.eraser_btn {
+    background-image: url("../img/eraser.svg");
+}
+
+.select_btn {
+    background-image: url("../img/translate.svg");
+}
+
+.rotate_btn {
+    background-image: url("../img/rotating.svg");
+}
+
+.ellipse_btn {
+    background-image: url("../img/ellipse.svg");
+}
+
+.clean_up_btn {
+    width: 32px;
+    height: 32px;
+    background-image: url("../img/clean_up.svg");
+}
+
+.settings_btn {
+    background-image: url("../img/settings.svg");
+}
+
+.zoom_out_btn {
+    background-image: url("../img/zoom_out.svg");
+}
+
+.zoom_in_btn {
+    background-image: url("../img/zoom_in.svg");
+}
+
+.magnifier_btn {
+    background-image: url("../img/magnifier.svg");
+}
+
+.slicer_btn {
+    background-image: url("../img/slicer.svg");
+}
+
+.func_btn {
+    background-image: url("../img/func.svg");
+}
+
+.screen_shot_btn {
+    background-image: url("../img/screen_shot.svg");
+}
+
+.mosaic_btn {
+    background-image: url("../img/mosaic.svg");
+}
+
+.symmetry_btn {
+    background-image: url("../img/symmetry.svg");
+}
+
+/*undo redo style*/
+.redo_btn {
+    background-image: url("../img/redo.svg");
+}
+
+.undo_btn {
+    background-image: url("../img/undo.svg");
+}
+
+/*橡皮擦 style*/
+.eraser {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    z-index: 9999;
+    left: 723px;
+    top: 426px;
+    background-image: url("../img/eraserIcon.svg");
+}
+
+.jRange_wrap {
+    display: block;
+    margin: 20px auto;
+    width: 300px;
+}
+
+.polygon_fill_opacity {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.jRange {
+    margin: 20px auto;
+}
+
+/********************************************************** settings **********************************************************/
+
+.settings_panel {
+    z-index: 999;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.settings {
+    width: 100%;
+    height: 100%;
+    background-color: #666666;
+}
+
+.setting {
+    width: 100%;
+    height: 300px;
+    border-bottom: 0px solid #ffffff;
+}
+
+.left_content_wrap {
+    width: 50%;
+    height: 100%;
+    float: left;
+    border-right: 0px solid #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.right_slider_wrap {
+    /*border: 1px solid red;*/
+    width: 50%;
+    height: 100%;
+    float: right;
+}
+
+.svg_tag {
+    /*border-right: 1px solid red;*/
+    /*border-left: 1px solid red;*/
+    width: 95%;
+    height: 100%;
+}
+
+.sliders {
+    width: 100%;
+}
+
+.slider {
+    /*border: 1px solid red;*/
+    margin-bottom: 3px;
+}
+
+.slider_txt {
+    height: 20px;
+    line-height: 20px;
+    margin-left: 10px;
+    /*border: 1px solid red;*/
+    color: #ffffff
+}
+
+.slider_range {
+    /*border: 1px solid red;*/
+    margin-left: 30px;
+}
+
+.colorPicker {
+    visibility: hidden;
+    position: absolute;
+    z-index: 99;
+    left: 0;
+}
+
+.awesome {
+    background: #ffffff;
+}

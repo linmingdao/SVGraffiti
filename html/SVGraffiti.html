@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SVGraffiti</title>
+    <link rel="stylesheet" type="text/css" href="../lib/spectrum/spectrum.css">
+    <link rel="stylesheet" href="../lib/jRange/jquery.range.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/SVGraffiti.css">
+</head>
+<body>
+
+<div class="user_wrap" style="border:0 solid red;margin:0 auto;">
+    <div class="graffiti_wrap">
+        <div class="panel_wrap">
+            <svg class="graffiti_panel">
+            </svg>
+            <div class="settings_panel">
+                <div class="settings">
+                    <div class="setting line_setting">
+                        <div class="left_content_wrap">
+                            <svg class="svg_tag line"></svg>
+                        </div>
+                        <div class="right_slider_wrap">
+                            <div class="sliders">
+                                <div class="slider">
+                                    <p class="slider_txt">width:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="line_stroke_width" value="2.0"/>
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <p class="slider_txt">opacity:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="line_stroke_opacity" value="2.0"/>
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <p class="slider_txt">dash:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="line_stroke_dash" value="2.0"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting">
+                        <div class="left_content_wrap">
+                            <svg class="svg_tag polygon"></svg>
+                        </div>
+                        <div class="right_slider_wrap">
+                            <div class="sliders">
+                                <div class="slider">
+                                    <p class="slider_txt">width:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="polygon_stroke_width" value="2.0"/>
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <p class="slider_txt">opacity:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="polygon_stroke_opacity" value="2.0"/>
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <p class="slider_txt">dash:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="polygon_stroke_dash" value="2.0"/>
+                                    </div>
+                                </div>
+                                <div class="slider">
+                                    <p class="slider_txt">dash:</p>
+
+                                    <div class="slider_range">
+                                        <input type="hidden" class="polygon_fill_opacity" value="2.0"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="colorPicker">
+                <input type='text' id="color_picker" title=""/>
+            </div>
+            <div class="eraser">
+            </div>
+        </div>
+        <div class="toolbar">
+            <div class="tools">
+                <!-- be taken -->
+                <div class="color_picker_toggle_btn color_btn in_idle"></div>
+                <div class="solid_line_btn color_btn"></div>
+                <div class="dash_line_btn color_btn"></div>
+                <div class="triangle_btn color_btn"></div>
+                <div class="square_btn color_btn"></div>
+                <div class="circle_btn color_btn"></div>
+                <div class="ellipse_btn color_btn"></div>
+                <div class="polygon_btn color_btn"></div>
+                <div class="pen_btn color_btn color_btn_selected"></div>
+                <div class="eraser_btn color_btn"></div>
+                <div class="select_btn color_btn"></div>
+                <div class="rotate_btn color_btn"></div>
+                <div class="save_as_image_btn color_btn"></div>
+                <div class="magnifier_btn color_btn"></div>
+                <div class="zoom_out_btn color_btn"></div>
+                <div class="zoom_in_btn color_btn"></div>
+                <div class="symmetry_btn color_btn"></div>
+                <div class="slicer_btn color_btn"></div>
+                <div class="func_btn color_btn"></div>
+                <div class="screen_shot_btn color_btn"></div>
+                <div class="mosaic_btn color_btn"></div>
+                <div class="clean_up_btn color_btn"></div>
+                <div class="settings_btn color_btn"></div>
+
+                <div class="undo_btn color_btn"></div>
+                <div class="redo_btn color_btn"></div>
+
+                <!-- in idle -->
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+                <div class="color_btn in_idle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../lib/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../lib/snap.svg-min.js"></script>
+<script type="text/javascript" src="../lib/jRange/jquery.range-min.js"></script>
+<script type="text/javascript" src="../lib/slimscroll/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="../lib/spectrum/spectrum.js"></script>
+
+<script type="text/javascript" src="../js/SVGraffiti.js"></script>
+
+</body>
+</html>

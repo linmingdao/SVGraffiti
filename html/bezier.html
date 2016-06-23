@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数曲线</title>
+    <script src="../lib/jquery-1.11.2.min.js"></script>
+    <script src="../lib/snap.svg-min.js"></script>
+    <style type="text/css">
+
+        body {
+            background-color: #ECECEC;
+        }
+
+        .wrap {
+            display: block;
+            width: 100%;
+            height: 1000px;
+            margin: 0 auto;
+        }
+
+        .panel_wrap {
+            display: block;
+            width: 100%;
+            height: 100%;
+            float: left;
+            cursor: pointer;
+        }
+
+        .panel {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border: 2px solid blueviolet;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <div class="panel_wrap">
+        <svg id="svg" class="panel">
+        </svg>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+
+    // 面板SVG节点
+    var svg = Snap("#svg");
+    var svgNode = $("#svg");
+
+    /**
+     * 工具类方法
+     */
+    var Utils = {
+        addHandler: function (element, type, handler) {// 添加句柄
+            if (element.addEventListener) {
+                element.addEventListener(type, handler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + type, handler);
+            } else {
+                element['on' + type] = handler;
+            }
+        },
+        removeHandler: function (element, type, handler) {// 删除句柄
+            if (element.removeEventListener) {
+                element.removeEventListener(type, handler, false);
+            } else if (element.detachEvent) {
+                element.detachEvent('on' + type, handler);
+            } else {
+                element['on' + type] = null;
+            }
+        },
+        getEvent: function (event) {// 获取event对象
+            return event ? event : window.event;
+        },
+        getType: function (event) {
+            return event.type;
+        },
+        getElement: function (event) {
+            return event.target || event.srcElement;
+        },
+        preventDefault: function (event) {//阻止浏览器默认行为
+            if (event.preventDefault) {
+                event.preventDefault();
+            } else {
+                event.returnValue = false;
+            }
+        },
+        stopPropagation: function (event) {//阻止事件冒泡
+            if (event.stopPropagation) {
+                event.stopPropagation();
+            } else {
+                event.cancelBubble = true;
+            }
+        },
+        forbidUserSelect: function ($region) {// 节点不可被鼠标选中
+            $region
+                    .attr("unselectable", "on")
+                    .css({
+                        "-moz-user-select": "-moz-none",
+                        "-moz-user-select": "none",
+                        "-o-user-select": "none",
+                        "-khtml-user-select": "none",
+                        "-webkit-user-select": "none",
+                        "-ms-user-select": "none",
+                        "user-select": "none"
+                    })
+                    .bind("selectstart", function () {
+                        return false;
+                    });
+        },
+        forbidScrollBar: function ($region) {// 节点禁用滚动条
+            $region.css("overflow", "hidden");
+        },
+        calDegree: function (x1, y1, x2, y2) {// 计算线段与水平线的夹角
+            var dis = Utils.calDistance(x1, y1, x2, y2);
+            var cos = Math.abs(x2 - x1) / dis;
+            var degree = Math.acos(cos) * 180 / Math.PI;
+            if (x1 < x2) {
+                if (y1 > y2) {//逆时针旋转
+                    degree = -degree;
+                }
+            } else {
+                if (y1 < y2) {//逆时针旋转
+                    degree = 180 - degree;
+                } else {
+                    degree = 180 - degree;
+                    degree = -degree;
+                }
+            }
+            return degree;
+        },
+        calDistance: function (x1, y1, x2, y2) {// 计算两点之间的距离
+            var disX = Math.abs(x1 - x2);
+            var disY = Math.abs(y1 - y2);
+            return Math.pow((disX * disX + disY * disY), 0.5);
+        },
+        calMidpoint: function (x1, y1, x2, y2) {// 计算两点的中点
+            return {
+                x: (x1 + x2) / 2,
+                y: (y1 + y2) / 2
+            };
+        },
+        getCurrentTimeMillis: function () {// 返回 1970 年 1 月 1 日至今的毫秒数，可以用来设置某时刻创建对象时的唯一ID
+            return new Date().getTime();
+        },
+        calMatrix: function (x1, y1, x2, y2) {// 已知对称轴的两点，求对称矩阵
+            var a = y1 - y2;
+            var b = x2 - x1;
+            var c = x1 * y2 - x2 * y1;
+            return [(b * b - a * a) / (a * a + b * b), -2 * a * b / (a * a + b * b), -2 * a * b / (a * a + b * b),
+                (a * a - b * b) / (a * a + b * b), -2 * a * c / (a * a + b * b), -2 * b * c / (a * a + b * b)];
+        }
+    };
+
+    // 记录当前绘制的颜色
+    var currentDrawColor = '#0f0';
+
+    /***************************************************************** test *****************************************************************/
+
+    /*
+     *根据已知点获取第i个控制点的坐标
+     *param ps	已知曲线将经过的坐标点
+     *param i	第i个坐标点
+     *param a,b	可以自定义的正数
+     */
+    function getCtrlPoint(ps, i, a, b) {
+        if (!a || !b) {
+            a = 0.25;
+            b = 0.25;
+        }
+        var pAx;
+        var pAy;
+        var pBx;
+        var pBy;
+        //处理两种极端情形
+        if (i < 1) {
+            pAx = ps[0].x + (ps[1].x - ps[0].x) * a;
+            pAy = ps[0].y + (ps[1].y - ps[0].y) * a;
+        } else {
+            pAx = ps[i].x + (ps[i + 1].x - ps[i - 1].x) * a;
+            pAy = ps[i].y + (ps[i + 1].y - ps[i - 1].y) * a;
+        }
+        if (i > ps.length - 3) {
+            var last = ps.length - 1;
+            pBx = ps[last].x - (ps[last].x - ps[last - 1].x) * b;
+            pBy = ps[last].y - (ps[last].y - ps[last - 1].y) * b;
+        } else {
+            pBx = ps[i + 1].x - (ps[i + 2].x - ps[i].x) * b;
+            pBy = ps[i + 1].y - (ps[i + 2].y - ps[i].y) * b;
+        }
+        return {
+            pA: {x: pAx, y: pAy},
+            pB: {x: pBx, y: pBy}
+        }
+    }
+
+    //    var points = [{x: 0, y: 380}, {x: 100, y: 430}, {x: 200, y: 280}, {x: 300, y: 160},
+    //        {x: 400, y: 340}, {x: 500, y: 100}, {x: 600, y: 300}, {x: 700, y: 240}];
+
+    var points = [];
+    var x = 0;
+    var y = Math.sin(x);
+    var point = {};
+    while (x < 1000) {
+        point.x = x * 100;
+        point.y = Math.sin(x) + 500;
+        points.push(point);
+        point = {};
+        x += 0.01;
+    }
+
+    //    point = [{x: 0, y: 380}, {x: 50, y: 390}, {x: 200, y: 370}, {x: 300, y: 160},
+    //        {x: 400, y: 340}, {x: 500, y: 100}, {x: 600, y: 300}, {x: 700, y: 240}];
+
+    //    var pathStr = "";
+    //    for (var i = 0; i < points.length; i++) {
+    //        if (i == 0) {
+    ////            ctx.moveTo(point[i].x, point[i].y);
+    //        } else {//注意是从1开始
+    //            var ctrlP = getCtrlPoint(points, i - 1);
+    ////            ctx.bezierCurveTo(ctrlP.pA.x, ctrlP.pA.y, ctrlP.pB.x, ctrlP.pB.y, point[i].x, point[i].y);
+    //
+    //            // 记录笔迹数据
+    //            pathStr += "M" + points[i - 1].x + " " + points[i - 1].y + "C" + ctrlP.pA.x + " " + ctrlP.pA.y + " " + ctrlP.pB.x + " " + ctrlP.pB.y + " " + points[i].x + " " + points[i].y;
+    //            console.log(pathStr);
+    //        }
+    //    }
+
+    //    currentPath = svg.paper.path(pathStr).attr({
+    //        stroke: currentDrawColor,
+    //        strokeWidth: 5,
+    //        fill: "none",
+    //        "stroke-opacity": 0.7,
+    //        "stroke-linecap": "round"// 处理锯齿
+    //    });
+
+    points.forEach(function (point) {
+        svg.paper.circle(point.x, point.y, 1).attr({
+            stroke: currentDrawColor,
+            strokeWidth: 2,
+            "stroke-opacity": 0.2,
+            "stroke-linecap": "round"// 处理锯齿
+        });
+    });
+
+    //    for (var i = 0, j = 1; j < points.length; i++, j++) {
+    //        svg.paper.line(points[i].x, points[i].y, points[j].x, points[j].y).attr({
+    //            stroke: "black",
+    //            strokeWidth: 3,
+    //            "stroke-opacity": 0.2,
+    //            "stroke-linecap": "round"// 处理锯齿
+    //        });
+    //    }
+
+    /***************************************************************** test *****************************************************************/
+
+</script>
+</body>
+</html>
