@@ -1,6 +1,8 @@
 # SVGraffiti
  SVGraffiti,deserves the name is on the base of the SVG API.
 
+----------
+
 # Features
 
 #### **no distortion**
@@ -16,37 +18,42 @@
 
 #### **flexible can be customized**
 > flexible can be customized.
-> 
+
+----------
 
 # Current Basic Function
 
-> **draw line tool**
+> **1、draw line tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawLine.gif)
 
-> **draw triangle tool**
+> **2、draw triangle tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawTriangle.gif)
 
-> **draw rectangle tool**
+> **3、draw rectangle tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawRectangle.gif)
 
-> **draw ellipse tool**
+> **4、draw ellipse tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawEllipse.gif)
 
-> **draw polygon tool**
+> **5、draw polygon tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawPolygon.gif)
 
-> **graffiti tool**
+> **6、graffiti tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/graffiti.gif)
 
-> **eraser tool**
+> **7、eraser tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/eraser.gif)
 
-> **clean tool**
+> **9、clean tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/clean.gif)
 
-> **setting panel**
+> **10、setting panel**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/setting.gif)
 
+----------
+
 # Optimizer Configuration
+
+----------
 
 # License
