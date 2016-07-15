@@ -20,31 +20,31 @@
 
 # Current Basic Function
 
-> draw line tool
+> **draw line tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawLine.gif)
 
-> draw triangle tool
+> **draw triangle tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawTriangle.gif)
 
-> draw rectangle tool
+> **draw rectangle tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawRectangle.gif)
 
-> draw ellipse tool
+> **draw ellipse tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawEllipse.gif)
 
-> draw polygon tool
+> **draw polygon tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/drawPolygon.gif)
 
-> graffiti tool
+> **graffiti tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/graffiti.gif)
 
-> eraser tool
+> **eraser tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/eraser.gif)
 
-> clean tool
+> **clean tool**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/clean.gif)
 
-> setting panel
+> **setting panel**
 > ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/setting.gif)
 
 # Optimizer Configuration
