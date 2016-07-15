@@ -5,7 +5,7 @@
 
 #### **no distortion**
 > there is no distortion.
-> ![image](https://github.com/MondayIsSun/customview/raw/master/screenshots/no_distortion.gif)
+> ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/no_distortion.gif)
 
 #### **compatible with all major browsers**
 > compatible with all major browsers.
