@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32px" height="32px" x="0px" y="0px"
+	 viewBox="0 0 44 44" enable-background="new 0 0 44 44" xml:space="preserve">
+<g id="cropsvg">
+	<path id="path-1" d="M44,1.5l-6.1,6.1C38,7.7,38,7.8,38,8v24h3c1.1,0,2,0.9,2,2v2c0,1.1-0.9,2-2,2h-3v3c0,1.1-0.9,2-2,2h-2
+		c-1.1,0-2-0.9-2-2v-3H8c-0.2,0-0.3,0-0.5-0.1L1.5,44L0,42.5l6.1-6.1C6,36.3,6,36.2,6,36V12H3c-1.1,0-2-0.9-2-2V8c0-1.1,0.9-2,2-2h3
+		V3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2v3h24c0.2,0,0.3,0,0.5,0.1L42.5,0L44,1.5z M38,36h3v-2h-3V36z M36,41V9.5l-2,2V41H36z
+		 M12,30.5L30.5,12H12V30.5z M13.5,32H32V13.5L13.5,32z M32,36v-2H11.5l-2,2H32z M10,32.5V12H8v22.5L10,32.5z M10,3H8v3h2V3z M3,8v2
+		h29.5l2-2H3z"/>
+	<path id="path-2" opacity="0.25" d="M37,37v-4h5v4H37z M7,37V11h4v22h22v4H7z M7,2h4v5H7V2z"/>
+</g>
+</svg>

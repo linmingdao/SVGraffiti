@@ -1,0 +1,37 @@
+{
+  "name": "svgraffiti",
+  "version": "1.0.0",
+  "description": "SVGraffiti,deserves the name is on the base of the SVG API.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --open --hot --color --progress",
+    "build": "webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linmingdao/SVGraffiti.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/linmingdao/SVGraffiti/issues"
+  },
+  "homepage": "https://github.com/linmingdao/SVGraffiti#readme",
+  "dependencies": {
+    "snapsvg": "^0.5.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "imports-loader": "^0.8.0",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^7.0.1",
+    "svg-url-loader": "^2.3.2",
+    "webpack": "^3.4.0",
+    "webpack-dev-server": "^2.6.1"
+  }
+}
