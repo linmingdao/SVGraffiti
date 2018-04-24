@@ -1,27 +1,19 @@
-body {
-    background-color: #0a0909;
-}
-
-// 用户提供的容器
-.container {
-    // border: 1px solid #525050;
-    margin: 0 auto;
-    height: 600px;
-    width: 900px;
-}
-
 $color_bg: #ececec;
 $color_function_bg: #fff;
 $color_function_hover: #0CC;
+
 // 侧边工具栏
 .svgraffiti_sidebar {
     & {
         background-color: $color_bg;
     }
+
     width: 80px;
     height: 100%;
     float: right;
-    overflow-y: auto; // 侧边工具栏内部的控件
+    overflow-y: auto;
+
+    // 侧边工具栏内部的控件
     div {
         height: 50px;
         width: 50px;
@@ -29,7 +21,7 @@ $color_function_hover: #0CC;
         border: 6px solid $color_function_bg;
         border-radius: 6px;
         box-sizing: border-box;
-        background-image: url('../img/dashLine.svg');
+        background-image: url('../../img/dashLine.svg');
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: center;
@@ -41,7 +33,7 @@ $color_function_hover: #0CC;
         -moz-box-shadow: 0 0 10px $color_function_hover;
         box-shadow: 0 0 10px $color_function_hover;
     }
-    .selected {
+    div.selected {
         box-shadow: -3px 0 10px red, /*左边阴影*/
         3px 0 10px yellow, /*右边阴影*/
         0 -3px 10px blue, /*顶部阴影*/
