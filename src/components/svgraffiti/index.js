@@ -1,17 +1,26 @@
 import './index.scss';
-import Snap from 'snapsvg';
-import * as SvgUtils from '../../utils/svg.js'
+import * as SvgUtils from '../../utils/svg.js';
+import Circle from '../../svg-stamper/stampers/Circle';
+import Line from '../../svg-stamper/stampers/Line';
+import Rect from '../../svg-stamper/stampers/Rect';
+import Ellipse from '../../svg-stamper/stampers/Ellipse';
+import Polygon from '../../svg-stamper/stampers/Polygon';
+import Polyline from '../../svg-stamper/stampers/Polyline';
+import Graffiti from '../../svg-stamper/stampers/Graffiti';
 
 export default class SVGraffiti {
 
     constructor(config) {
+        this.$config = config;
         this.$functions = {};
         this.$activatedFunction = {};
-        this.render(config);
+        this.stage(config);
+        this.bindEvent();
+        this.test();
     }
 
-    render(config) {
-        this.$el = document.querySelector(config.el);
+    stage() {
+        this.$el = document.querySelector(this.$config.el);
 
         this.$sideBar = document.createElement("div");
         this.$sideBar.className = 'svgraffiti_sidebar';
@@ -31,65 +40,69 @@ export default class SVGraffiti {
         });
         this.$svg.style = 'background-color:#555';
 
-        const circle = SvgUtils.createSvg('circle', {
-            'cx': 10,
-            'cy': 10,
-            'r': 10,
-            'fill': '#fff'
-        })
-        const line = SvgUtils.createSvg('line', {
-            'x1': 50,
-            'y1': 50,
-            'x2': 80,
-            'y2': 80,
-            'stroke': '#fff'
-        })
-        const rect = SvgUtils.createSvg('rect', {
-            'x': 100,
-            'y': 100,
-            'rx': 10,
-            'ry': 10,
-            'width': 100,
-            'height': 100,
-            'stroke-width': 5,
-            'stroke': 'pink',
-            'fill': '#fff',
-            // 'fill-opacity': 0.5,
-            // 'stroke-opacity': 0.5
-        })
-        const ellipse = SvgUtils.createSvg('ellipse', {
-            'cx': 150,
-            'cy': 50,
-            'rx': 50,
-            'ry': 10,
-            'fill': 'pink'
-        })
-        const polygon = SvgUtils.createSvg('polygon', {
-            'points': '300,100 300,210 170,250',
-            'fill': 'green',
-            'stroke-width': 2,
-            'stroke': 'black'
-        })
-        const polyline = SvgUtils.createSvg('polyline', {
-            'points': '0,0 0,20 20,20 20,40 40,40 40,60',
-            'stroke-width': 10,
-            'fill': 'none',
-            'stroke': 'red'
-        })
-        this.$svg.appendChild(circle)
-        this.$svg.appendChild(line)
-        this.$svg.appendChild(rect)
-        this.$svg.appendChild(ellipse)
-        this.$svg.appendChild(polygon)
-        this.$svg.appendChild(polyline)
-
         // 插入svg面板
         this.$svgraffitiPanel.appendChild(this.$svg);
-
-        this.init();
     }
 
-    init() {
+    test() {
+        // const circle = new Circle({ cx: 100, cy: 100, r: 20 })
+        //     .centerY(200)
+        //     .centerX(300)
+        //     .radius(100)
+        //     .fill('red')
+        //     .fillOpacity(.5)
+        //     .stroke('yellow')
+        //     .strokeWidth(10)
+        //     .strokeOpacity(1)
+        //     .affix(this.$svg);
+
+        // const ellipse = new Ellipse({ cx: 100, cy: 100, rx: 20, ry: 40 })
+        //     .centerY(200)
+        //     .centerX(300)
+        //     .radius(100, 200)
+        //     .fill('red')
+        //     // .fillOpacity(.5)
+        //     .stroke('yellow')
+        //     .strokeWidth(5)
+        //     // .strokeOpacity(1)
+        //     .affix(this.$svg);
+
+        // const line = new Line({ x1: 10, y1: 10, x2: 100, y2: 100})
+        //     .stroke('red')
+        //     .strokeWidth(10)
+        //     .strokeOpacity(1)
+        //     // .strokeDash(10,10)
+        //     .strokeLinecap(Line.LINECAP.ROUND)
+        //     .affix(this.$svg);
+
+        // const rect = new Rect({ x: 10, y: 10, width: 200, height: 100})
+        //     .stroke('yellow')
+        //     .fill('red')
+        //     .strokeWidth(10)
+        //     .strokeOpacity(1)
+        //     .size(300, 200)
+        //     .radius(20, 20)
+        //     .affix(this.$svg);
+
+        // const polygon = new Polygon({})
+        //     .stroke('yellow')
+        //     .fill('pink')
+        //     .vertexs([10, 10], [10, 100], [100, 100])
+        //     .strokeWidth(2)
+        //     .affix(this.$svg);
+
+        // const polyline = new Polyline({})
+        //     .stroke('yellow')
+        //     .fill('none')
+        //     .strokeLinecap(Polyline.LINECAP.ROUND)
+        //     .vertexs([10, 10], [10, 100], [100, 100], [150, 200])
+        //     .strokeWidth(5)
+        //     .affix(this.$svg);
+
+        const graffiti = new Graffiti().fill('none').affix(this.$svg)
+    }
+
+    bindEvent() {
         this.$svg.onclick = event => {
             // console.log('onclick');
             // this.$activatedFunction.onClick(event);
