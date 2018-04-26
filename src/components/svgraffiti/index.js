@@ -1,4 +1,4 @@
-import './index.scss';
+import '../../style/style.scss';
 
 export default class SVGraffiti {
 
