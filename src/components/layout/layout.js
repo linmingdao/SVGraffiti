@@ -1,4 +1,4 @@
-import './style.scss';
+import './layout.scss';
 import template from './layout.html';
 
 export default class Layout {
@@ -10,12 +10,6 @@ export default class Layout {
     layout(config) {
         this.$el = document.querySelector(config.el);
         this.$el.innerHTML = template;
-        // this.$sideBar = document.createElement("div");
-        // this.$sideBar.className = 'svgraffiti_sidebar';
-        // this.$svgraffitiPanel = document.createElement("div");
-        // this.$svgraffitiPanel.className = 'svgraffiti_panel';
-        // this.$el.appendChild(this.$sideBar);
-        // this.$el.appendChild(this.$svgraffitiPanel);
     }
 
     root() {
