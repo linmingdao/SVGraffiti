@@ -21,6 +21,4 @@ const createSvg = (tag, attrs) => {
     return svgObj;
 };
 
-export {
-    createSvg
-}
+export default createSvg;

@@ -1,4 +1,4 @@
-import { createSvg } from './createSvg';
+import createSvg from './createSvg';
 
 export default class Stamper {
     constructor(tag = '', attrs = {}) {

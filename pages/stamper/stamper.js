@@ -1,3 +1,3 @@
-import StamperTester from './light-ut/StamperTester';
+import StamperTest from './svgstamper@test';
 
-new StamperTester().run();
+new StamperTest().run();
