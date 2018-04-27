@@ -25,6 +25,9 @@ module.exports = {
             exclude: /node_modules/,
             loader: "babel-loader"
         }, {
+            test: /\.html$/,
+            loader: "html-loader"
+        }, {
             // 用正则去匹配要用该loader转换的scss文件
             test: /\.scss$/,
             exclude: /node_modules/,

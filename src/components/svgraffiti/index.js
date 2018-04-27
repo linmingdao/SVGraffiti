@@ -1,4 +1,5 @@
-import '../../style/style.scss';
+
+import Layout from '../layout/index';
 
 export default class SVGraffiti {
 
@@ -6,7 +7,8 @@ export default class SVGraffiti {
         this.$config = config;
         this.$functions = {};
         this.$activatedFunction = {};
-        this.layout();
+        // this.layout();
+        new Layout(config);
     }
 
     layout() {
