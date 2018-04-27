@@ -20,7 +20,7 @@ class StamperTester extends Tester {
             width: 300,
             height: 300
         });
-        paper.style = 'margin:10px;background-color:#555;cursor:pointer;';
+        paper.style = 'border-radius:5px;border:10px solid #fff;margin:8px;background-color:#555;cursor:pointer;';
         this.svgroot.appendChild(paper);
 
         return paper;
