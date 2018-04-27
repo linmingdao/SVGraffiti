@@ -1,32 +1,4 @@
-const NS = 'http://www.w3.org/2000/svg';
-const ATTR_NS = 'http://www.w3.org/1999/xlink';
-
-const create = (tag, attrs) => {
-    if (!document.createElementNS) {
-        return {
-            msg: 'your client does not support svg.'
-        };
-    }
-    const svgObj = document.createElementNS(NS, tag);
-    for (let key in attrs) {
-        switch (key) {
-            case 'xlink:href':
-                // 文本路径添加属性特有
-                svgObj.setAttributeNS(ATTR_NS, key, attrs[key]);
-                break
-            default:
-                svgObj.setAttribute(key, attrs[key]);
-        }
-    }
-    return svgObj;
-};
-
-const stage = (w, h) => {
-    return this.create('svg', {
-        width: w,
-        height: h
-    });
-};
+import { createSvg } from './createSvg';
 
 export default class Stamper {
     constructor(tag = '', attrs = {}) {
@@ -83,7 +55,7 @@ export default class Stamper {
 
     // 创建svg节点对象(雕刻)
     engrave() {
-        this.stamper = create(this.tag, this.attrs);
+        this.stamper = createSvg(this.tag, this.attrs);
         return this;
     }
 
