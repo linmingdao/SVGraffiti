@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>pubsub</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .content {
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        .main {
+            width: 100%;
+            float: left;
+        }
+
+        .main_content {
+            background: #e3bdbd;
+            margin: 0 200px;
+            height: 500px;
+        }
+
+        .billboard {
+            height: 450px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .billboard p {
+            height: 20px;
+            line-height: 20px;
+            margin: 5px 0;
+            margin-left: 10px;
+        }
+
+        .left {
+            background: #b8b0b0;
+            width: 200px;
+            float: left;
+            margin-left: -100%;
+            height: 500px;
+        }
+
+        .right {
+            background: #b8b0b0;
+            width: 200px;
+            float: left;
+            margin-left: -200px;
+            height: 500px;
+        }
+
+        .left p,
+        .right p,
+        .main_content>p {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px dashed #fff;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            background-color: #fff;
+            height: 50px;
+            line-height: 50px;
+            border-radius: 10px;
+            width: 160px;
+            font-size: 10px;
+            margin: 50px auto;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="main">
+            <div class="main_content">
+                <p style="text-align: center;">消息列表</p>
+                <div class="billboard"></div>
+            </div>
+        </div>
+        <div class="left">
+            <p style="text-align: center;">主题订阅者</p>
+            <a href="javascript:void(0);" class="subscriber" topic="sonybankrupt">订阅：索尼破产了吗?</a>
+            <a href="javascript:void(0);" class="subscriber" topic="iphone">订阅：iPhone的消息</a>
+            <a href="javascript:void(0);" class="subscriber" topic="iphone">订阅：iPhone的消息</a>
+        </div>
+        <div class="right">
+            <p style="text-align: center;">发布主题消息</p>
+            <a href="javascript:void(0);" class="publisher" topic="sonybankrupt">发布：索尼没破产了</a>
+            <a href="javascript:void(0);" class="publisher" topic="iphone X">发布：iPhone X不会降价</a>
+            <a href="javascript:void(0);" class="publisher" topic="iphone New">发布：iPhone新品发布会</a>
+        </div>
+    </div>
+</body>
+
+</html>
