@@ -1,5 +1,5 @@
-import * as Stampers from '../../../src/libs/svg-stamper/stampers-mixin';
-import createSvg from '../../../src/libs/svg-stamper/stampers/base/createSvg';
+import * as Stampers from '../../../src/supports/svg-stamper/stampers-mixin';
+import createSvg from '../../../src/supports/svg-stamper/stampers/base/createSvg';
 import Tester from './Tester';
 import Autowired from './decorators/autowired';
 
