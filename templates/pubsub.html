@@ -13,6 +13,7 @@
         .content {
             box-sizing: border-box;
             width: 100%;
+            min-width: 600px;
         }
 
         .main {
@@ -24,11 +25,16 @@
             background: #e3bdbd;
             margin: 0 200px;
             height: 500px;
+            min-width: 200px;
         }
 
         .billboard {
             height: 450px;
             width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             overflow-y: auto;
         }
 
@@ -36,12 +42,13 @@
             height: 20px;
             line-height: 20px;
             margin: 5px 0;
-            margin-left: 10px;
+            margin: 5px;
         }
 
         .left {
             background: #b8b0b0;
             width: 200px;
+            min-width: 200px;
             float: left;
             margin-left: -100%;
             height: 500px;
@@ -50,6 +57,7 @@
         .right {
             background: #b8b0b0;
             width: 200px;
+            min-width: 200px;
             float: left;
             margin-left: -200px;
             height: 500px;
@@ -88,15 +96,17 @@
         </div>
         <div class="left">
             <p style="text-align: center;">主题订阅者</p>
-            <a href="javascript:void(0);" class="subscriber" topic="sonybankrupt">订阅：索尼破产了吗?</a>
-            <a href="javascript:void(0);" class="subscriber" topic="iphone">订阅：iPhone的消息</a>
-            <a href="javascript:void(0);" class="subscriber" topic="iphone">订阅：iPhone的消息</a>
+            <a href="javascript:void(0);" class="subscriber" topic="sonybankrupt">索尼仇家</a>
+            <a href="javascript:void(0);" class="subscriber" topic="iphone X">果粉一号</a>
+            <a href="javascript:void(0);" class="subscriber" topic="iphone New">果粉二号</a>
+            <a href="javascript:void(0);" class="intermediary_subscriber" topic="MTK">国产分子</a>
         </div>
         <div class="right">
             <p style="text-align: center;">发布主题消息</p>
             <a href="javascript:void(0);" class="publisher" topic="sonybankrupt">发布：索尼没破产了</a>
             <a href="javascript:void(0);" class="publisher" topic="iphone X">发布：iPhone X不会降价</a>
             <a href="javascript:void(0);" class="publisher" topic="iphone New">发布：iPhone新品发布会</a>
+            <a href="javascript:void(0);" class="intermediary_publisher" topic="MTK">发布：支持国产手机！</a>
         </div>
     </div>
 </body>

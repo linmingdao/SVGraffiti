@@ -1,3 +1,6 @@
+/**
+ * 主题订阅发布中心
+ */
 export default class PubSub {
 
     // 缓存主题和主题的订阅者列表
@@ -5,31 +8,44 @@ export default class PubSub {
 
     /**
      * 发布主题消息
-     * @param topic 主题
-     * @param entity 消息体 
+     * @param {String} topic 主题
+     * @param {*} entity 消息体 
      */
     static publish(topic, entity) {
-        if (!PubSub.topics[topic]) {
-            return;
-        }
+        if (!PubSub.topics[topic]) return;
 
+        // 获取该主题的订阅者列表
         const subscribers = PubSub.topics[topic];
 
         // 向所有该主题的订阅者发送主题消息
         for (let subscriber of subscribers) {
-            subscriber.notify && subscriber.notify(entity)
+            subscriber.notify && subscriber.notify(entity);
         }
     }
 
+    /**
+     * 一次登记一个主题
+     * @param {String} topic 
+     */
     static registerTopic(topic) {
         const topics = PubSub['topics'];
         !topics[topic] && (topics[topic] = []);
     }
 
     /**
+     * 同时登记多个主题
+     * @param {Array} topics 
+     */
+    static registerTopics(topics = []) {
+        topics.forEach(topic => {
+            this.registerTopic(topic);
+        });
+    }
+
+    /**
      * 添加主题订阅者
-     * @param {string} topic 主题
-     * @param {object} subscriber 实现了notify接口的订阅者
+     * @param {String} topic 主题
+     * @param {Object} subscriber 实现了notify接口的订阅者
      */
     static addSubscriber(topic, subscriber) {
         const topics = PubSub['topics'];
