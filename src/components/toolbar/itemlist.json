@@ -1,0 +1,69 @@
+[
+    {
+        "icon": "/src/img/pallet.svg",
+        "icon_active": "/src/img/pallet.svg",
+        "tag": "pallet",
+        "cornermark": false,
+        "active": true
+    },
+    {
+        "icon": "/src/img/line.svg",
+        "icon_active": "/src/img/line_active.svg",
+        "tag": "line"
+    },
+    {
+        "icon": "/src/img/dashline.svg",
+        "icon_active": "/src/img/dashline_active.svg",
+        "tag": "dashline",
+        "active": true
+    },
+    {
+        "icon": "/src/img/triangle.svg",
+        "icon_active": "/src/img/triangle_active.svg",
+        "tag": "triangle"
+    },
+    {
+        "icon": "/src/img/rect.svg",
+        "icon_active": "/src/img/rect_active.svg",
+        "tag": "rect"
+    },
+    {
+        "icon": "/src/img/ellipse.svg",
+        "icon_active": "/src/img/ellipse_active.svg",
+        "tag": "ellipse"
+    },
+    {
+        "icon": "/src/img/polygon.svg",
+        "icon_active": "/src/img/polygon_active.svg",
+        "tag": "polygon"
+    },
+    {
+        "icon": "/src/img/polyline.svg",
+        "icon_active": "/src/img/polyline_active.svg",
+        "tag": "polyline"
+    },
+    {
+        "icon": "/src/img/curve.svg",
+        "icon_active": "/src/img/curve_active.svg",
+        "tag": "curve"
+    },
+    {
+        "icon": "/src/img/eraser.svg",
+        "icon_active": "/src/img/eraser_active.svg",
+        "tag": "eraser"
+    },
+    {
+        "icon": "/src/img/empty.svg",
+        "icon_active": "/src/img/empty.svg",
+        "tag": "empty",
+        "cornermark": false,
+        "active": true
+    },
+    {
+        "icon": "/src/img/setting.svg",
+        "icon_active": "/src/img/setting.svg",
+        "tag": "setting",
+        "cornermark": false,
+        "active": true
+    }
+]

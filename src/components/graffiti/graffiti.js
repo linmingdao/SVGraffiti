@@ -6,6 +6,5 @@ export default class SVGraffiti {
         this.$config = config;
         this.$functions = {};
         this.$activatedFunction = {};
-        new Layout(config);
     }
 }

@@ -1,73 +1,80 @@
-$color_bg: #ececec;
-$color_function_bg: #fff;
-$color_function_hover: #0CC;
-
 // 侧边工具栏
-.svgraffiti_sidebar {
-    & {
-        background-color: $color_bg;
-    }
-
-    width: 80px;
+.sidebar {
+    background-color: #dcdbdb;
+    width: 120px;
     height: 100%;
     float: right;
     overflow-y: auto;
 
     // 侧边工具栏内部的控件
-    div {
-        height: 50px;
-        width: 50px;
+    div.function {
+        height: 90px;
+        width: 90px;
         margin: 15px auto;
-        border: 6px solid $color_function_bg;
+        border: 6px solid #fff;
+        background-color: #eceeee;
         border-radius: 6px;
         box-sizing: border-box;
-        background-image: url('../../img/dashLine.svg');
         background-repeat: no-repeat;
         background-position-x: center;
         background-position-y: center;
-        background-size: 32rpx 32rpx;
+        background-size: 70% 70%;
+        div.cornermark {
+            height: 35px;
+            width: 35px;
+            border-radius: 5px;
+            position: relative;
+            top: -6px;
+            left: -6px;
+            background-image: url('../../img/cornermark.svg');
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 90% 90%;
+        }
     }
-    div:hover {
+    div.function:hover {
         cursor: pointer;
-        -webkit-box-shadow: 0 0 10px $color_function_hover;
-        -moz-box-shadow: 0 0 10px $color_function_hover;
-        box-shadow: 0 0 10px $color_function_hover;
     }
-    div.selected {
-        box-shadow: -3px 0 10px red, /*左边阴影*/
-        3px 0 10px yellow, /*右边阴影*/
-        0 -3px 10px blue, /*顶部阴影*/
-        0 3px 10px green;
-        /*底边阴影*/
+    div.function.active {
+        background-color: #c1ecf3;
+        div.cornermark{
+            background-image: url('../../img/cornermark_active.svg');
+        }
     }
 }
 
 // 滚动条样式
-.svgraffiti_sidebar::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar {
     /*滚动条整体样式*/
     width: 4px;
     /*高宽分别对应横竖滚动条的尺寸*/
     height: 4px;
 }
 
-.svgraffiti_sidebar::-webkit-scrollbar-thumb {
+.sidebar::-webkit-scrollbar-thumb {
     /*滚动条里面小方块*/
-    border-radius: 5px;
-    box-shadow: inset 0 0 5px #00000033;
+    border-radius: 4px;
+    box-shadow: inset 0 0 4px #00000033;
     background: #00000033;
 }
 
-.svgraffiti_sidebar::-webkit-scrollbar-track {
+.sidebar::-webkit-scrollbar-track {
     /*滚动条里面轨道*/
-    box-shadow: inset 0 0 5px #00000033;
+    box-shadow: inset 0 0 4px #00000033;
     border-radius: 0;
     background: #0000001a;
 }
 
 // SVG画板区域
-.svgraffiti_panel {
+.sketchpad_box {
     cursor: pointer;
     height: 100%;
     background-color: #fff;
     overflow: hidden;
+    svg{
+        width: 100%;
+        height: 100%;
+    }
 }

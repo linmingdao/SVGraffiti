@@ -12,6 +12,7 @@ export default class PubSub {
      * @param {*} entity 消息体 
      */
     static publish(topic, entity) {
+        console.log(`PubSub发布了消息:【${topic}】,消息内容:【${entity}】`);
         if (!PubSub.topics[topic]) return;
 
         // 获取该主题的订阅者列表
