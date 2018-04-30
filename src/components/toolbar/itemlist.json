@@ -3,67 +3,85 @@
         "icon": "/src/img/pallet.svg",
         "icon_active": "/src/img/pallet.svg",
         "tag": "pallet",
-        "cornermark": false,
-        "active": true
+        "type": "preference",
+        "cornermark": false
     },
     {
         "icon": "/src/img/line.svg",
         "icon_active": "/src/img/line_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "line"
     },
     {
         "icon": "/src/img/dashline.svg",
         "icon_active": "/src/img/dashline_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "dashline",
         "active": true
     },
     {
         "icon": "/src/img/triangle.svg",
         "icon_active": "/src/img/triangle_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "triangle"
     },
     {
         "icon": "/src/img/rect.svg",
         "icon_active": "/src/img/rect_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "rect"
     },
     {
         "icon": "/src/img/ellipse.svg",
         "icon_active": "/src/img/ellipse_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "ellipse"
     },
     {
         "icon": "/src/img/polygon.svg",
         "icon_active": "/src/img/polygon_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "polygon"
     },
     {
         "icon": "/src/img/polyline.svg",
         "icon_active": "/src/img/polyline_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "polyline"
     },
     {
         "icon": "/src/img/curve.svg",
         "icon_active": "/src/img/curve_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "curve"
     },
     {
         "icon": "/src/img/eraser.svg",
         "icon_active": "/src/img/eraser_active.svg",
+        "type": "functional",
+        "cornermark": true,
         "tag": "eraser"
     },
     {
         "icon": "/src/img/empty.svg",
         "icon_active": "/src/img/empty.svg",
-        "tag": "empty",
+        "type": "memoryFunctional",
         "cornermark": false,
-        "active": true
+        "tag": "empty"
     },
     {
         "icon": "/src/img/setting.svg",
         "icon_active": "/src/img/setting.svg",
         "tag": "setting",
         "cornermark": false,
-        "active": true
+        "type": "preference"
     }
 ]

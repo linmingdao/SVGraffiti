@@ -1,5 +1,7 @@
 import Publisher from '../../supports/pubsub/base/publisher';
-import Item from './item';
+import FunctionItem from './base/functionItem';
+import ResidentFunctionItem from './base/residentFunctionItem';
+import PreferenceItem from './base/preferenceItem';
 import Items from './items';
 import itemList from './itemlist.json';
 
@@ -10,6 +12,8 @@ export default class ToolBar extends Publisher {
 
         // 缓存toolbar容器节点
         this.$container = container;
+
+        this.enabledFunction = null;
 
         // 初始化toolbar的item项
         this.initItems();
@@ -22,7 +26,20 @@ export default class ToolBar extends Publisher {
      * 初始化toolbar的内部功能项
      */
     initItems() {
-        ToolBar.items.map(item => this.$container.appendChild(new Item(item).getView()));
+        this.functionsMap = {};
+        ToolBar.items.map(cfg => {
+            let item;
+            if (cfg.type === 'functional') {
+                item = new FunctionItem(cfg);
+                this.functionsMap[cfg.tag] = item;
+                cfg.active && (this.enabledFunction = item);
+            } else if (cfg.type === 'memoryFunctional') {
+                item = new ResidentFunctionItem(cfg);
+            } else {
+                item = new PreferenceItem(cfg);
+            }
+            this.$container.appendChild(item.getView());
+        });
     }
 
     /**
@@ -31,17 +48,41 @@ export default class ToolBar extends Publisher {
      */
     onClick(event) {
         const func = event.target.getAttribute('function');
-        const setting = event.target.getAttribute('setting');
+        const memoryfunc = event.target.getAttribute('memoryfunctional');
+        const funcsetting = event.target.getAttribute('funcsetting');
+        const globalsetting = event.target.getAttribute('globalsetting');
 
         if (func) {
-            // 发布切换画板功能的主题消息
-            this.publish('function', func);
+            this.switchFunction(func);
             return;
         }
 
-        if (setting) {
-            // 发布设置画板属性值的主题消息
-            this.publish('setting', setting);
+        if (memoryfunc) {
+            this.publish('function', memoryfunc);
+            return;
         }
+
+        if (funcsetting) {
+            const status = event.target.parentNode.getAttribute('status');
+            if (status === 'enable') {
+                // 发布设置画板属性值的主题消息
+                this.publish('funcsetting', funcsetting);
+            }
+            return;
+        }
+
+        if (globalsetting) {
+            // 发布设置画板属性值的主题消息
+            this.publish('globalsetting', globalsetting);
+        }
+    }
+
+    switchFunction(func) {
+        this.enabledFunction.disable();
+        this.functionsMap[func].enable();
+        this.enabledFunction = this.functionsMap[func];
+
+        // 发布切换画板功能的主题消息
+        this.publish('function', func);
     }
 }
