@@ -1,5 +1,5 @@
 import Layout from './components/layout/layout';
-import ToolBar from './components/toolbar/toolbar';
+import ToolBar from './components/toolbar/ToolBar';
 
 export default class SVGraffiti {
     constructor(config) {
