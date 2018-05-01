@@ -6,16 +6,25 @@ export default class FunctionItem {
         this.tag = config.tag;
         this.active = config.active;
 
-        this.$item = document.createElement('div');
-
         this.init();
     }
 
     init() {
-        this.$item.setAttribute('function', this.tag);
+        this.$item = document.createElement('div');
+        this.$item.className = 'item';
 
-        // 设置左上角功能参数设置按钮
-        this.config.cornermark && (this.$item.innerHTML = `<div funcsetting="${this.tag}" class="cornermark"></div>`);
+        this.$content = document.createElement('a');
+        this.$content.setAttribute('function', this.tag);
+        this.$content.className = 'content';
+        this.$item.appendChild(this.$content);
+
+        // 左上角角标
+        if (this.config['local_preference']) {
+            this.$localPreference = document.createElement('a');
+            this.$localPreference.setAttribute('local_preference', this.tag);
+            this.$localPreference.className = 'cornermark';
+            this.$item.appendChild(this.$localPreference);
+        }
 
         // 设置是否出于激活态
         this.active ? this.enable() : this.disable();
@@ -23,16 +32,16 @@ export default class FunctionItem {
 
     enable() {
         this.active = true;
-        this.$item.setAttribute('status', 'enable');
-        this.$item.className = `function active`;
-        this.$item.style = `background-image: url(${this.config.icon_active});`;
+        this.$item.setAttribute('status', 'enabled');
+        this.$item.className = `item enabled`;
+        this.$content.style.backgroundImage = `url(${this.config.icon_active})`;
     }
 
     disable() {
         this.active = false;
-        this.$item.setAttribute('status', 'disable');
-        this.$item.className = `function`;
-        this.$item.style = `background-image: url(${this.config.icon});`;
+        this.$item.setAttribute('status', 'disabled');
+        this.$item.className = `item`;
+        this.$content.style.backgroundImage = `url(${this.config.icon})`;
     }
 
     getView() {

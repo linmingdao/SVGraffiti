@@ -1,4 +1,4 @@
-export default class ResidentFunctionItem {
+export default class PreferenceItem {
     constructor(config) {
         this.config = config;
         this.type = config.type;
@@ -12,7 +12,7 @@ export default class ResidentFunctionItem {
         this.$item.className = 'item enabled';
 
         this.$content = document.createElement('a');
-        this.$content.setAttribute('resident_function', this.tag);
+        this.$content.setAttribute('global_preference', this.tag);
         this.$content.className = 'content';
         this.$content.style.backgroundImage = `url(${this.config.icon_active})`;
         this.$item.appendChild(this.$content);

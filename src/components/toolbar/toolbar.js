@@ -1,11 +1,26 @@
 import Publisher from '../../supports/pubsub/base/publisher';
-import FunctionItem from './base/functionItem';
-import ResidentFunctionItem from './base/residentFunctionItem';
-import PreferenceItem from './base/preferenceItem';
-import Items from './items';
-import itemList from './itemlist.json';
+import FunctionItem from './base/FunctionItem';
+import ResidentFunctionItem from './base/ResidentFunctionItem';
+import GlobalPreferenceItem from './base/GlobalPreferenceItem';
+import { Items } from './decorators';
+import configuration from './configuration.json';
 
-@Items(itemList)
+const Constructors = {
+    'function': FunctionItem,
+    'resident_function': ResidentFunctionItem,
+    'global_preference': GlobalPreferenceItem
+};
+
+const createItem = cfg => {
+    const constructor = Constructors[cfg.type];
+    if (constructor) {
+        return new constructor(cfg);
+    } else {
+        throw new Error(`unsupported type:${cfg.type}`);
+    }
+}
+
+@Items(configuration)
 export default class ToolBar extends Publisher {
     constructor(container) {
         super();
@@ -13,7 +28,7 @@ export default class ToolBar extends Publisher {
         // 缓存toolbar容器节点
         this.$container = container;
 
-        this.enabledFunction = null;
+        this.activedItem = null;
 
         // 初始化toolbar的item项
         this.initItems();
@@ -23,22 +38,19 @@ export default class ToolBar extends Publisher {
     }
 
     /**
-     * 初始化toolbar的内部功能项
+     * 初始化toolbar功能项列表
      */
     initItems() {
-        this.functionsMap = {};
+        this.functions = {};
         ToolBar.items.map(cfg => {
-            let item;
-            if (cfg.type === 'functional') {
-                item = new FunctionItem(cfg);
-                this.functionsMap[cfg.tag] = item;
-                cfg.active && (this.enabledFunction = item);
-            } else if (cfg.type === 'memoryFunctional') {
-                item = new ResidentFunctionItem(cfg);
-            } else {
-                item = new PreferenceItem(cfg);
+            const item = createItem(cfg);
+            if (item) {
+                if (cfg.type === 'function') {
+                    this.functions[cfg.tag] = item;
+                    cfg.active && (this.activedItem = item);
+                }
+                this.$container.appendChild(item.getView());
             }
-            this.$container.appendChild(item.getView());
         });
     }
 
@@ -47,40 +59,41 @@ export default class ToolBar extends Publisher {
      * @param {Object} event 
      */
     onClick(event) {
-        const func = event.target.getAttribute('function');
-        const memoryfunc = event.target.getAttribute('memoryfunctional');
-        const funcsetting = event.target.getAttribute('funcsetting');
-        const globalsetting = event.target.getAttribute('globalsetting');
+        const target = event.target;
 
+        const func = target.getAttribute('function');
         if (func) {
             this.switchFunction(func);
             return;
         }
 
-        if (memoryfunc) {
-            this.publish('function', memoryfunc);
+        const residentFunc = target.getAttribute('resident_function');
+        if (residentFunc) {
+            this.publish('resident_function', residentFunc);
             return;
         }
 
-        if (funcsetting) {
+        const localPreference = target.getAttribute('local_preference');
+        if (localPreference) {
             const status = event.target.parentNode.getAttribute('status');
-            if (status === 'enable') {
+            if (status === 'enabled') {
                 // 发布设置画板属性值的主题消息
-                this.publish('funcsetting', funcsetting);
+                this.publish('local_preference', localPreference);
             }
             return;
         }
 
-        if (globalsetting) {
+        const globalPreference = target.getAttribute('global_preference');
+        if (globalPreference) {
             // 发布设置画板属性值的主题消息
-            this.publish('globalsetting', globalsetting);
+            this.publish('global_preference', globalPreference);
         }
     }
 
     switchFunction(func) {
-        this.enabledFunction.disable();
-        this.functionsMap[func].enable();
-        this.enabledFunction = this.functionsMap[func];
+        this.activedItem.disable();
+        this.functions[func].enable();
+        this.activedItem = this.functions[func];
 
         // 发布切换画板功能的主题消息
         this.publish('function', func);

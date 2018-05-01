@@ -7,26 +7,39 @@
     overflow-y: auto;
 
     // 侧边工具栏内部的控件
-    div.function {
+    div.item {
+        position: relative;
         height: 90px;
         width: 90px;
         margin: 15px auto;
-        border: 6px solid #fff;
         background-color: #eceeee;
-        border-radius: 6px;
-        box-sizing: border-box;
-        background-repeat: no-repeat;
-        background-position-x: center;
-        background-position-y: center;
-        background-size: 70% 70%;
-        div.cornermark {
+
+        a.content {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border: 6px solid #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-size: 70% 70%;
+        }
+        a.content:active {
+            background-color: #96e4f0;
+        }
+        
+        a.cornermark {
+            display: block;
             height: 35px;
             width: 35px;
-            border-radius: 5px;
-            position: relative;
-            top: -6px;
-            left: -6px;
-            background-image: url('../../img/cornermark.svg');
+            border-radius: 50%;
+            border-top-left-radius: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url('../../img/cornermark_disabled.svg');
             background-color: #fff;
             background-repeat: no-repeat;
             background-position-x: center;
@@ -34,12 +47,15 @@
             background-size: 90% 90%;
         }
     }
-    div.function:hover {
+    div.item:hover {
         cursor: pointer;
     }
-    div.function.active {
+    div.item.enabled {
         background-color: #c1ecf3;
-        div.cornermark{
+        a.cornermark{
+            background-image: url('../../img/cornermark.svg');
+        }
+        a.cornermark:active {
             background-image: url('../../img/cornermark_active.svg');
         }
     }
