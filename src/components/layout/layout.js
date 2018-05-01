@@ -9,7 +9,7 @@ export default class Layout {
 
     /**
      * 布局
-     * @param {Object} config 
+     * @param {Object} config
      */
     layout(config) {
         this.$el = document.querySelector(config.el);

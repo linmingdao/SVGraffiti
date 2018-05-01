@@ -1,0 +1,215 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>svgraffiti</title>
+    <script language="javascript">
+        function h(obj, url) {
+            obj.style.behavior = 'url(#default#homepage)';
+            obj.setHomePage(url);
+        }
+
+        function $(id) {
+            obj = document.getElementById(id);
+            if (obj == null) obj = document.all.id;
+            return obj;
+        }
+
+        //检查颜色值-Begin
+        function isNum16(ch) {
+            if (ch >= '0' && ch <= '9') return true;
+            if (ch >= 'A' && ch <= 'F') return true;
+            if (ch >= 'a' && ch <= 'f') return true;
+            return false;
+        }
+        function isAllNum16(str1) {//判断颜色值。除第一个字符#外的任一个值是否大于等a,A,0,小于等于f,F,9，否则报错。
+            for (i = 1; i < str1.length; i++) {
+                if (!isNum16(str1.charAt(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        function checkCol(myColor) {   //made by jiarry,input color value to change background
+            if (myColor != "") {
+
+                if (myColor.length != 7 || myColor.charAt(0) != "#") {
+                    alert("颜色值加#至少7位，请检查！");
+                    $("SelColor").value = "";
+                }
+                else if (!isAllNum16(myColor)) {
+                    alert("颜色代码错误，请检查/n 颜色代码示例:#ff6600");
+                    $("SelColor").value = "";
+                }
+                else {
+                    return myColor;
+                }
+            }
+        }
+        //检查颜色值-END
+        var SelRGB = '#808080';
+        var DrRGB = "";
+        var SelGRAY = '120';
+        var SelCol = "";
+        var baseCol = "#808080";
+        var light = "120";
+        var RGB = $("RGB");
+
+        var hexch = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
+        //add innerText to FireFox Begin
+        if (!document.all) {
+            HTMLElement.prototype.__defineGetter__
+                (
+                "innerText",
+                function () {
+                    var anyString = "";
+
+                    var childS = this.childNodes;
+                    for (var i = 0; i < childS.length; i++) {
+                        if (childS[i].nodeType == 1)
+                            anyString += childS[i].tagName == "BR" ? '/n' : childS[i].innerText;
+                        else if (childS[i].nodeType == 3)
+                            anyString += childS[i].nodeValue;
+                    }
+                    return anyString;
+                }
+                );
+        }
+        ////add innerText to FireFox End
+
+        function ToHex(n) {
+            var h, l;
+
+            n = Math.round(n);
+            l = n % 16;
+            h = Math.floor((n / 16)) % 16;
+            return (hexch[h] + hexch[l]);
+        }
+        function DoColor(c, l) {
+            var r, g, b;
+
+            r = '0x' + c.substring(1, 3);
+            g = '0x' + c.substring(3, 5);
+            b = '0x' + c.substring(5, 7);
+
+            if (l > 120) {
+                l = l - 120;
+
+                r = (r * (120 - l) + 255 * l) / 120;
+                g = (g * (120 - l) + 255 * l) / 120;
+                b = (b * (120 - l) + 255 * l) / 120;
+            } else {
+                r = (r * l) / 120;
+                g = (g * l) / 120;
+                b = (b * l) / 120;
+            }
+
+            return '#' + ToHex(r) + ToHex(g) + ToHex(b);
+        }
+
+        function EndColor() {
+            var i;
+            var GrayTable = $("GrayTable");
+
+            if (DrRGB != SelRGB) {
+                DrRGB = SelRGB;
+                for (i = 0; i <= 30; i++)
+                    GrayTable.rows[i].bgColor = DoColor(SelRGB, 240 - i * 8);
+            }
+            var SelColor = $("SelColor");
+            var RGB = baseCol;
+            var GRAY = light;
+            var ShowColor = $("ShowColor");
+            SelColor.value = DoColor(baseCol, light);
+            ShowColor.bgColor = SelColor.value;
+            document.getElementById('copytip').innerHTML = '';
+        }
+        function ctOut(e) {
+            baseCol = SelRGB;
+            EndColor(baseCol);
+        }
+        function ctClick(e) {
+            SelRGB = e.bgColor;
+            EndColor();
+        }
+        function ctOver(e) {
+            baseCol = e.bgColor.toUpperCase();
+            EndColor();
+        }
+        function gtOver(e) {
+            light = e.title;
+            EndColor();
+        }
+        function gtOut() {
+            light = SelGRAY;
+            EndColor();
+        }
+        function gtClick(e) {
+            SelGRAY = e.title;
+            EndColor();
+        }
+        function okClick() {
+            var SelColor = $("SelColor");
+            self.parent.setColor(SelColor.value);
+        }
+        function inpCol(o) {
+            var l = o.value;
+            if (l.length == 7) {
+                $('ShowColor').bgColor = checkCol(o.value);
+            }
+            else if (l.length > 7) {
+                o.value = l.substring(0, 7);
+                alert("颜色代码加#不能超过7位");
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <!-- 颜色选择器 -->
+    <table id="ColorTable" border=0 cellspacing=2 cellpadding=0 style='cursor:pointer;'>
+        <script>
+            function wc(r, g, b, n) {
+                r = ((r * 16 + r) * 3 * (15 - n) + 0x80 * n) / 15;
+                g = ((g * 16 + g) * 3 * (15 - n) + 0x80 * n) / 15;
+                b = ((b * 16 + b) * 3 * (15 - n) + 0x80 * n) / 15;
+
+                document.write('<td bgcolor=#' + ToHex(r) + ToHex(g) + ToHex(b) + ' height=20 width=30 onmouseover="ctOver(this)" onmouseout="ctOut(this)" onmousedown="ctClick(this)"></td>');
+            }
+            var cnum = new Array(1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0);
+
+            for (i = 0; i < 16; i++) {
+                document.write('<tr>');
+                for (j = 0; j < 30; j++) {
+                    n1 = j % 5;
+                    n2 = Math.floor(j / 5) * 3;
+                    n3 = n2 + 3;
+
+                    wc((cnum[n3] * n1 + cnum[n2] * (5 - n1)),
+                        (cnum[n3 + 1] * n1 + cnum[n2 + 1] * (5 - n1)),
+                        (cnum[n3 + 2] * n1 + cnum[n2 + 2] * (5 - n1)), i);
+                }
+                document.writeln('</tr>');
+            }
+        </script>
+    </table>
+    <!-- 颜色深度选择器 -->
+    <table id="GrayTable" border=0 cellspacing=0 cellpadding=0 style='cursor:pointer'>
+        <script>
+            for (i = 255; i >= 0; i -= 8.5) {
+                document.write('<tr border=#' + ToHex(i) + ToHex(i) + ToHex(i) + '><td title=' + Math.floor(i * 16 / 17) + ' height=5 width=20 onmouseover="gtOver(this)" onmouseout="gtOut()" onmousedown="gtClick(this)"></td></tr>');
+            }
+        </script>
+    </table>
+    <!-- 选中的颜色 -->
+    <table id="ShowColor" width="50" height="24" cellspacing="0" cellpadding="0">
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    <!-- 颜色值 -->
+    <input type="text" class="colInp" ID=SelColor value="#FFFFFF" SIZE=7 onkeyup="inpCol(this)">
+</body>
+
+</html>
