@@ -1,5 +1,6 @@
 import Layout from './components/layout/layout';
 import ToolBar from './components/toolbar/ToolBar';
+import Settings from './components/settings/settings';
 
 export default class SVGraffiti {
     constructor(config) {
@@ -8,9 +9,8 @@ export default class SVGraffiti {
 
     layout(config) {
         this.layout = new Layout(config);
-        // console.log(this.layout.sketchpad());
-        // console.log(this.layout.sidebar());
         this.toolbar = new ToolBar(this.layout.sidebar());
+        this.settings = new Settings(this.layout.settings());
     }
 
     initToolBar() {

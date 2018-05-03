@@ -18,14 +18,24 @@ export default class Layout {
 
     /**
      * 获取画板svg节点
-     * @returns {svgElement} 画板svg节点
      */
     sketchpad() {
         return this.$el.querySelector('#sketchpad');
     }
 
+    /**
+     * 获取侧边栏工具条容器节点
+     */
     sidebar() {
         return this.$el.querySelector('.sidebar');
     }
+
+    /**
+     * 获取设置面板容器节点
+     */
+    settings() {
+        return this.$el.querySelector('.settings_box');
+    }
+
 
 }

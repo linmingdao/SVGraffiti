@@ -1,0 +1,77 @@
+@import '../togglebutton/togglebuttons.scss';
+
+.color_picker_box {
+    // padding: 10px;
+    width: 400px;
+    background-color: #e4e2e6;
+}
+
+.color_presets,
+.color_gradient,
+.light_picker {
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.bottom {
+    height: 36px;
+    width: 100%;
+}
+
+.bottom>.item_ctrl {
+    float: left;
+    height: 36px;
+    line-height: 36px;
+}
+
+.bottom>.item_ctrl:nth-child(1) {
+    position: relative;
+    width: 30%;
+}
+
+.bottom>.item_ctrl:nth-child(1)>span {
+    display: inline-block;
+    height: 36px;
+    width: 65px;
+    border-radius: 3px;
+    background-color: #d85600;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bottom>.item_ctrl:nth-child(2) {
+    position: relative;
+    width: 30%;
+}
+
+.bottom>.item_ctrl:nth-child(2)>input {
+    display: inline-block;
+    width: 65px;
+    height: 30px;
+    text-align: center;
+    font-size: 18px;
+
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.bottom>.item_ctrl:nth-child(3),
+.bottom>.item_ctrl:nth-child(4) {
+    width: 20%;
+}
+
+.bottom a {
+    width: 70px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    float: right;
+}

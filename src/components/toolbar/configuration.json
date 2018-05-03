@@ -17,6 +17,13 @@
         "icon": "/src/img/dashline.svg",
         "icon_active": "/src/img/dashline_active.svg",
         "type": "function",
+        "local_preference": true
+    },
+    {
+        "tag": "curve",
+        "icon": "/src/img/curve.svg",
+        "icon_active": "/src/img/curve_active.svg",
+        "type": "function",
         "local_preference": true,
         "active": true
     },
@@ -52,13 +59,6 @@
         "tag": "polyline",
         "icon": "/src/img/polyline.svg",
         "icon_active": "/src/img/polyline_active.svg",
-        "type": "function",
-        "local_preference": true
-    },
-    {
-        "tag": "curve",
-        "icon": "/src/img/curve.svg",
-        "icon_active": "/src/img/curve_active.svg",
         "type": "function",
         "local_preference": true
     },
