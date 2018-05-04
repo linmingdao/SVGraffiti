@@ -1,9 +1,8 @@
 @import '../togglebutton/togglebuttons.scss';
-
 .color_picker_box {
     // padding: 10px;
     width: 400px;
-    background-color: #e4e2e6;
+    background-color: #dcdbdb;
 }
 
 .color_presets,
@@ -35,7 +34,6 @@
     width: 65px;
     border-radius: 3px;
     background-color: #d85600;
-
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -52,11 +50,9 @@
     height: 30px;
     text-align: center;
     font-size: 18px;
-
     outline: none;
     -webkit-appearance: none;
     border-radius: 0;
-
     position: absolute;
     top: 50%;
     transform: translateY(-50%);

@@ -90,7 +90,7 @@ export default class ColorPicker {
             if ((i + 1) < gradientColors.length) {
                 startColor = gradientColors[i];
                 endColor = gradientColors[i + 1];
-                chunk += gradient(startColor, endColor, 50);
+                chunk += gradient(startColor, endColor, 40);
             }
         }
         chunk += '</tr>';
