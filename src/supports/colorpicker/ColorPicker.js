@@ -1,9 +1,9 @@
 import './colorpicker.scss';
 import template from './template.html';
-import PresetsPicker from './components/presetspicker/PresetsPicker';
-import GradientPicker from './components/gradientpicker/GradientPicker';
-import LightPicker from './components/lightpicker/LightPicker';
-import Operator from './components/operator/Operator';
+import configuration from './configuration.json';
+import PresetsPicker from './components/PresetsPicker';
+import GradientPicker from './components/GradientPicker';
+import Operator from './components/Operator';
 
 export default class ColorPicker {
 
@@ -23,15 +23,15 @@ export default class ColorPicker {
     }
 
     createPresetsPicker() {
-        new PresetsPicker(this.root);
+        new PresetsPicker(this.root, configuration.preset_colors);
     }
 
     createGradientPicker() {
-        new GradientPicker(this.root);
+        new GradientPicker(this.root, configuration.gradient_colors, 40);
     }
 
     createLightPicker() {
-        new LightPicker(this.root)
+        new GradientPicker(this.root, ['#000000', '#ffffff'], 100);
     }
 
     createOperator() {

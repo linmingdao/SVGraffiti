@@ -43,3 +43,9 @@ export function gradient(colorStart, colorEnd, step = 50) {
     }
     return result;
 }
+
+export function reverseColor(OldColorValue) {
+    var OldColorValue = "0x" + OldColorValue.replace(/#/g, "");
+    var str = "000000" + (0xFFFFFF - OldColorValue).toString(16);
+    return `#${str.substring(str.length - 6, str.length)}`;
+}
