@@ -13,4 +13,8 @@ export default class Subscriber {
     constructor() {
         addSubscribe(this.__proto__.constructor.topics, this);
     }
+
+    subscribe(topic) {
+        PubSub.addSubscriber(topic, this);
+    }
 }

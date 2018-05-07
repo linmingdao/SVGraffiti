@@ -1,27 +1,32 @@
 import {
+    fullHexColor,
     gradient,
     reverseColor
 } from '../utils';
 
 export default class GradientPicker {
 
-    constructor(container, colors = [], step = 50) {
+    constructor(container, colors = [], step = 100) {
+        this.$container = container;
+        this.gradient(colors, step);
+    }
+
+    gradient(colors = [], step = 50) {
         this.gradientColors = colors;
         this.step = step;
-        this.$container = container;
         this.$container.appendChild(this.getView());
         this.bindEvent();
     }
 
-    getView() {
-        const gradientTable = document.createElement('table');
-        gradientTable.className = 'color_gradient';
-        gradientTable.setAttribute('border', 0);
-        gradientTable.setAttribute('cellspacing', 0);
-        gradientTable.setAttribute('cellpadding', 0);
-        gradientTable.setAttribute('border-collapse', 'collapse');
+    reGradient(colors = [], step = 100) {
+        this.gradientColors = colors;
+        this.step = step;
+        // 生成新的渐变器
+        this.gradientTr.innerHTML = this.getGradientChunk();
+    }
 
-        let chunk = '<tr>';
+    getGradientChunk() {
+        let chunk = '';
         var startColor, endColor;
         for (let i = 0; i < this.gradientColors.length; ++i) {
             if ((i + 1) < this.gradientColors.length) {
@@ -30,26 +35,49 @@ export default class GradientPicker {
                 chunk += gradient(startColor, endColor, this.step);
             }
         }
-        chunk += '</tr>';
-        gradientTable.innerHTML = chunk;
+        return chunk;
+    }
+
+    getView() {
+        const gradientTable = document.createElement('table');
+        gradientTable.className = 'color_gradient';
+
+        gradientTable.setAttribute('border', 0);
+        gradientTable.setAttribute('cellspacing', 0);
+        gradientTable.setAttribute('cellpadding', 0);
+        gradientTable.setAttribute('border-collapse', 'collapse');
+
+        let chunk = this.getGradientChunk();
+        const gradientTr = document.createElement('tr');
+        gradientTr.innerHTML = chunk;
 
         this.gradientTable = gradientTable;
+        this.gradientTr = gradientTr;
+        this.gradientTable.appendChild(this.gradientTr);
 
-        return gradientTable;
+        return this.gradientTable;
     }
 
     bindEvent() {
-        let lastSelectedTd = null;
-        let currentSelectedTd = null;
-        this.gradientTable.onmousedown = function (e) {
+        this.lastSelectedTd = null;
+        this.currentSelectedTd = null;
+        this.gradientTable.onmousedown = e => {
             if (e.target.tagName === 'TD') {
-                if (lastSelectedTd) {
-                    lastSelectedTd.style['border-right'] = '0px solid #fff';
+                if (this.lastSelectedTd) {
+                    this.lastSelectedTd.style['border-right'] = '0px solid #fff';
                 }
-                lastSelectedTd = currentSelectedTd = e.target;
-                currentSelectedTd.style['border-right'] = `2px solid ${reverseColor(e.target.bgColor)}`;
-                console.log(e.target.bgColor);
+                this.lastSelectedTd = this.currentSelectedTd = e.target;
+                this.currentSelectedTd.style['border-right'] = `2px solid ${reverseColor(e.target.bgColor)}`;
+                this.colorChangeCallback && this.colorChangeCallback(fullHexColor(e.target.bgColor));
             }
         }
+    }
+
+    reset() {
+        this.currentSelectedTd.style['border-right'] = '0px solid #fff';
+    }
+
+    onColorChange(callback) {
+        this.colorChangeCallback = callback;
     }
 }

@@ -70,6 +70,10 @@ export default class Stamper {
         paper.appendChild(this.stamper);
         return this;
     }
+
+    remove() {
+        this.stamper.remove();
+    }
 }
 
 Stamper.LINECAP = {

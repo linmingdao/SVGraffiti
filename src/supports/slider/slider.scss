@@ -15,25 +15,25 @@ input[type=range]::-webkit-slider-runnable-track {
     /* animate: 0.2s; */
     animation: 0.2s;
     box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-    background: #ac51b5;
-    border-radius: 25px;
+    background: #9b9999;
+    border-radius: 20px;
     border: 0px solid #000101;
 }
 
 input[type=range]::-webkit-slider-thumb {
     box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
-    border: 0px solid #000000;
+    border: 0px solid #fff;
     height: 20px;
-    width: 39px;
+    width: 30px;
     border-radius: 7px;
-    background: #65001c;
+    background: #b4a6a6;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -3.6px;
 }
 
 input[type=range]:focus::-webkit-slider-runnable-track {
-    background: #ac51b5;
+    background: #767776;
 }
 
 input[type=range]::-moz-range-track {

@@ -24,6 +24,14 @@ export function rgb2color(rgb) {
     return s.toUpperCase();
 }
 
+export function fullHexColor(color) {
+    if (color.length === 4) {
+        color = color.replace('#', '')
+        return '#' + color.split('').map(c => c + c).join('');
+    }
+    return color;
+}
+
 /**
  * 生成渐变(gradient算法)
  * @param {String} colorStart 
@@ -49,3 +57,10 @@ export function reverseColor(OldColorValue) {
     var str = "000000" + (0xFFFFFF - OldColorValue).toString(16);
     return `#${str.substring(str.length - 6, str.length)}`;
 }
+
+
+export const isDOM = (typeof HTMLElement === 'object') ? function (obj) {
+    return obj instanceof HTMLElement;
+} : function (obj) {
+    return obj && typeof obj === 'object' && obj.nodeType === 1 && typeof obj.nodeName === 'string';
+};

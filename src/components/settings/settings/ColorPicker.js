@@ -11,7 +11,10 @@ export default class ColorPicker {
         this.$view = document.createElement('div');
         this.$view.className = `setting_item`;
 
-        this.clrPicker = new ClrPicker(this.$view);
+        this.clrPicker = new ClrPicker({
+            el: this.$view,
+            components: ['presets', 'gradient', 'depth', 'operator']
+        });
 
         this.container.appendChild(this.$view);
     }

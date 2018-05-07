@@ -1,4 +1,5 @@
 import {
+    fullHexColor,
     reverseColor
 } from '../utils';
 
@@ -36,15 +37,19 @@ export default class PresetsPicker {
     bindClick() {
         let lastSelectedTd = null;
         let currentSelectedTd = null;
-        this.presetsTable.onmousedown = function (e) {
+        this.presetsTable.onmousedown = e => {
             if (e.target.tagName === 'TD') {
                 if (lastSelectedTd) {
                     lastSelectedTd.style.border = '2px solid #fff';
                 }
                 lastSelectedTd = currentSelectedTd = e.target;
                 currentSelectedTd.style.border = '2px solid red';
-                console.log(e.target.bgColor);
+                this.colorChangeCallback && this.colorChangeCallback(fullHexColor(e.target.bgColor));
             }
         }
+    }
+
+    onColorChange(callback) {
+        this.colorChangeCallback = callback;
     }
 }

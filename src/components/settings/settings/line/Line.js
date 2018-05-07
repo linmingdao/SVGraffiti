@@ -1,3 +1,4 @@
+import ColorPicker from '../../../../supports/colorpicker/ColorPicker';
 import Slider from '../../../../supports/slider/Slider';
 import template from './template.html';
 import * as Stampers from '../../../../supports/svg-stamper/stampers-mixin';
@@ -22,20 +23,61 @@ export default class Line {
         // this.slider = new Slider(this.$view);
 
         this.container.appendChild(this.$view);
+
+        new ColorPicker({
+            el: this.$view.querySelector('.color_picker'),
+            components: ['gradient']
+        }).onColorChange(color => {
+            this.previewLine.remove();
+            this.previewLine = new Stampers.Line({
+                    x1: 20,
+                    y1: 110,
+                    x2: 380,
+                    y2: 100
+                })
+                .stroke(color)
+                .strokeWidth(10)
+                .strokeOpacity(.7)
+                .strokeDash(0)
+                .strokeLinecap(Stampers.Line.LINECAP.ROUND)
+                .affix(this.$linePreview);
+        });
     }
 
     initPreview() {
         this.$linePreview = this.$view.querySelector('.line_preview');
-        const line = new Stampers.Line({
-            x1: 20,
-            y1: 100,
-            x2: 380,
-            y2: 100
-        })
+        new Stampers.Line({
+                x1: 20,
+                y1: 20,
+                x2: 380,
+                y2: 120
+            })
+            .stroke('#21c863')
+            .strokeLinecap(Stampers.Line.LINECAP.ROUND)
+            .strokeWidth(15)
+            .affix(this.$linePreview);
+
+        new Stampers.Line({
+                x1: 20,
+                y1: 80,
+                x2: 380,
+                y2: 180
+            })
+            .stroke('#f2eb45')
+            .strokeLinecap(Stampers.Line.LINECAP.ROUND)
+            .strokeWidth(15)
+            .affix(this.$linePreview);
+
+        this.previewLine = new Stampers.Line({
+                x1: 20,
+                y1: 110,
+                x2: 380,
+                y2: 100
+            })
             .stroke('red')
             .strokeWidth(10)
-            .strokeOpacity(.5)
-            .strokeDash(30)
+            .strokeOpacity(.7)
+            .strokeDash(0)
             .strokeLinecap(Stampers.Line.LINECAP.ROUND)
             .affix(this.$linePreview);
     }
