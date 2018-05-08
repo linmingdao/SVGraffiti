@@ -20,7 +20,7 @@ export default class PubSub {
 
         // 向所有该主题的订阅者发送主题消息
         for (let subscriber of subscribers) {
-            subscriber.notify && subscriber.notify(entity);
+            subscriber.notify && subscriber.notify(topic, entity);
         }
     }
 

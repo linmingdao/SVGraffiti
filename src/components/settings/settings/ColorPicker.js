@@ -19,6 +19,14 @@ export default class ColorPicker {
         this.container.appendChild(this.$view);
     }
 
+    show() {
+        this.$view.style.display = 'block';
+    }
+
+    hide() {
+        this.$view.style.display = 'none';
+    }
+
     getView() {
         return this.$view;
     }

@@ -10,41 +10,71 @@ export default class Line {
         this.init(container);
     }
 
-    init() {
-        this.$view = document.createElement('div');
-        this.$view.className = `setting_item`;
+    addWatch() {
+        const __self = this;
 
-        this.$view.innerHTML = template;
+        const common_configure = {
+            configurable: false,
+            enumerable: true,
+        };
 
-        this.initPreview();
-
-        this.$options = this.$view.querySelector('.options');
-
-        // this.slider = new Slider(this.$view);
-
-        this.container.appendChild(this.$view);
-
-        new ColorPicker({
-            el: this.$view.querySelector('.color_picker'),
-            components: ['gradient']
-        }).onColorChange(color => {
-            this.previewLine.remove();
-            this.previewLine = new Stampers.Line({
-                    x1: 20,
-                    y1: 110,
-                    x2: 380,
-                    y2: 100
-                })
-                .stroke(color)
-                .strokeWidth(10)
-                .strokeOpacity(.7)
-                .strokeDash(0)
-                .strokeLinecap(Stampers.Line.LINECAP.ROUND)
-                .affix(this.$linePreview);
+        let strokeColorValue = '#1f47df';
+        let strokeDashValue = '';
+        let strokeWidthValue = 10;
+        let strokeOpacityValue = 1;
+        Object.defineProperties(this, {
+            strokeColor: {
+                set: function (newVal) {
+                    if (strokeColorValue !== newVal) {
+                        strokeColorValue = newVal;
+                        __self.updatePreviewScreen();
+                    }
+                },
+                get: function () {
+                    return strokeColorValue;
+                },
+                ...common_configure
+            },
+            strokeDash: {
+                set: function (newVal) {
+                    if (strokeDashValue !== newVal) {
+                        strokeDashValue = newVal;
+                        __self.updatePreviewScreen();
+                    }
+                },
+                get: function () {
+                    return strokeDashValue;
+                },
+                ...common_configure
+            },
+            strokeWidth: {
+                set: function (newVal) {
+                    if (strokeWidthValue !== newVal) {
+                        strokeWidthValue = newVal;
+                        __self.updatePreviewScreen();
+                    }
+                },
+                get: function () {
+                    return strokeWidthValue;
+                },
+                ...common_configure
+            },
+            strokeOpacity: {
+                set: function (newVal) {
+                    if (strokeOpacityValue !== newVal) {
+                        strokeOpacityValue = newVal;
+                        __self.updatePreviewScreen();
+                    }
+                },
+                get: function () {
+                    return strokeOpacityValue;
+                },
+                ...common_configure
+            }
         });
     }
 
-    initPreview() {
+    initRefScreen() {
         this.$linePreview = this.$view.querySelector('.line_preview');
         new Stampers.Line({
                 x1: 20,
@@ -54,9 +84,8 @@ export default class Line {
             })
             .stroke('#21c863')
             .strokeLinecap(Stampers.Line.LINECAP.ROUND)
-            .strokeWidth(15)
+            .strokeWidth(10)
             .affix(this.$linePreview);
-
         new Stampers.Line({
                 x1: 20,
                 y1: 80,
@@ -64,22 +93,68 @@ export default class Line {
                 y2: 180
             })
             .stroke('#f2eb45')
+            .strokeDash(20, 20)
+            .strokeOpacity(1)
             .strokeLinecap(Stampers.Line.LINECAP.ROUND)
-            .strokeWidth(15)
+            .strokeWidth(10)
             .affix(this.$linePreview);
+    }
 
+    updatePreviewScreen() {
+        this.previewLine && this.previewLine.remove();
         this.previewLine = new Stampers.Line({
                 x1: 20,
-                y1: 110,
+                y1: 100,
                 x2: 380,
                 y2: 100
             })
-            .stroke('red')
-            .strokeWidth(10)
-            .strokeOpacity(.7)
-            .strokeDash(0)
+            .stroke(this.strokeColor)
+            .strokeWidth(this.strokeWidth)
+            .strokeOpacity(this.strokeOpacity)
+            // .strokeDash(this.strokeDash)
             .strokeLinecap(Stampers.Line.LINECAP.ROUND)
             .affix(this.$linePreview);
+    }
+
+    init() {
+        const __self = this;
+
+        this.$view = document.createElement('div');
+        this.$view.className = `setting_item`;
+        this.$view.innerHTML = template;
+
+        this.$options = this.$view.querySelector('.options');
+        this.container.appendChild(this.$view);
+
+        this.addWatch();
+        this.initRefScreen();
+        this.updatePreviewScreen();
+
+        // color picker
+        new ColorPicker({
+            el: this.$view.querySelector('.color_picker'),
+            components: ['gradient']
+        }).onColorChange(color => {
+            this.strokeColor = color;
+        });
+        // range: stroke_width
+        this.strokeWidthRange = this.container.querySelector('.stroke_width_range');
+        this.strokeWidthRange.oninput = function (e) {
+            __self.strokeWidth = this.value;
+        }
+        // range: stroke_opacity
+        this.strokeOpacityRange = this.container.querySelector('.stroke_opacity_range');
+        this.strokeOpacityRange.oninput = function (e) {
+            __self.strokeOpacity = this.value;
+        }
+    }
+
+    show() {
+        this.$view.style.display = 'block';
+    }
+
+    hide() {
+        this.$view.style.display = 'none';
     }
 
     getView() {
