@@ -2,8 +2,9 @@ import SubScatterer from '../../supports/pubsub/base/subscatterer';
 import Topics from '../../supports/pubsub/base/topics';
 import ColorPicker from './settings/ColorPicker';
 import Line from './settings/line/Line';
+import Triangle from './settings/triangle/Triangle';
 
-@Topics(['local_preference', 'global_preference'])
+@Topics(['local_preference', 'global_preference', 'function'])
 export default class Settings extends SubScatterer {
 
     constructor(container) {
@@ -11,14 +12,20 @@ export default class Settings extends SubScatterer {
 
         const colorPicker = new ColorPicker(container);
         const line = new Line(container);
+        const triangle = new Triangle(container);
         colorPicker.hide();
         line.hide();
+        triangle.hide();
 
         this.preferences = {
             local_preference: {
                 line: {
                     show: false,
                     target: line
+                },
+                triangle: {
+                    show: false,
+                    target: triangle
                 }
             },
             global_preference: {
@@ -45,13 +52,17 @@ export default class Settings extends SubScatterer {
             }
         }
 
-        const item = this.preferences[topic][entity];
-        item.show = true;
-        item['target'].show();
-        this.activedSetting = {
-            topic,
-            entity,
-            item
-        };
+        if (topic === 'local_preference' || topic === 'global_preference') {
+            const item = this.preferences[topic][entity];
+            if (item) {
+                item.show = true;
+                item['target'].show();
+                this.activedSetting = {
+                    topic,
+                    entity,
+                    item
+                };
+            }
+        }
     }
 }

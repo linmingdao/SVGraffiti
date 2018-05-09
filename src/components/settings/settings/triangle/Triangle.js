@@ -3,7 +3,7 @@ import Slider from '../../../../supports/slider/Slider';
 import template from './template.html';
 import * as Stampers from '../../../../supports/svg-stamper/stampers-mixin';
 
-export default class Line {
+export default class Triangle {
 
     constructor(container) {
         this.container = container;
@@ -18,9 +18,10 @@ export default class Line {
             enumerable: true,
         };
 
+        let fillColorValue = '#1f47df';
         let strokeColorValue = '#1f47df';
-        let strokeDashValue = 25;
-        let strokeWidthValue = 10;
+        let strokeDashValue = 6;
+        let strokeWidthValue = 3;
         let strokeOpacityValue = .7;
         Object.defineProperties(this, {
             strokeColor: {
@@ -32,6 +33,18 @@ export default class Line {
                 },
                 get: function () {
                     return strokeColorValue;
+                },
+                ...common_configure
+            },
+            fillColor: {
+                set: function (newVal) {
+                    if (fillColorValue !== newVal) {
+                        fillColorValue = newVal;
+                        __self.updatePreviewScreen();
+                    }
+                },
+                get: function () {
+                    return fillColorValue;
                 },
                 ...common_configure
             },
@@ -75,44 +88,24 @@ export default class Line {
     }
 
     initRefScreen() {
-        this.$linePreview = this.$view.querySelector('.line_preview');
-        new Stampers.Line({
-                x1: 20,
-                y1: 20,
-                x2: 380,
-                y2: 120
-            })
-            .stroke('#21c863')
-            .strokeLinecap(Stampers.Line.LINECAP.ROUND)
-            .strokeWidth(10)
-            .affix(this.$linePreview);
-        new Stampers.Line({
-                x1: 20,
-                y1: 80,
-                x2: 380,
-                y2: 180
-            })
-            .stroke('#f2eb45')
-            // .strokeDash(20, 20)
-            .strokeOpacity(1)
-            .strokeLinecap(Stampers.Line.LINECAP.ROUND)
-            .strokeWidth(10)
+        this.$linePreview = this.$view.querySelector('.triangle_preview');
+        const polygon = new Stampers.Polygon({})
+            .stroke('yellow')
+            .fill('pink')
+            .vertexs([50, 60], [200, 50], [150, 180])
+            .strokeWidth(2)
             .affix(this.$linePreview);
     }
 
     updatePreviewScreen() {
-        this.previewLine && this.previewLine.remove();
-        this.previewLine = new Stampers.Line({
-                x1: 20,
-                y1: 100,
-                x2: 380,
-                y2: 100
-            })
+        this.preview && this.preview.remove();
+        this.preview = new Stampers.Polygon({})
             .stroke(this.strokeColor)
+            .strokeDash(this.strokeDash, this.strokeDash)
+            .fill(this.fillColor)
+            .fillOpacity(this.strokeOpacity)
+            .vertexs([150, 60], [300, 50], [250, 180])
             .strokeWidth(this.strokeWidth)
-            .strokeOpacity(this.strokeOpacity)
-            .strokeDash(this.strokeDash)
-            .strokeLinecap(Stampers.Line.LINECAP.ROUND)
             .affix(this.$linePreview);
     }
 
@@ -130,29 +123,37 @@ export default class Line {
         this.initRefScreen();
         this.updatePreviewScreen();
 
-        // color picker
+        // stroke color picker
         new ColorPicker({
-            el: this.$view.querySelector('.color_picker'),
+            el: this.$view.querySelector('.triangle_stroke_color'),
             components: ['gradient']
         }).onColorChange(color => {
             this.strokeColor = color;
         });
 
+        // fill color picker
+        new ColorPicker({
+            el: this.$view.querySelector('.triangle_fill_color'),
+            components: ['gradient']
+        }).onColorChange(color => {
+            this.fillColor = color;
+        });
+
         // range: stroke_dash
-        this.strokeDashRange = this.container.querySelector('.line_stroke_dash_range');
+        this.strokeDashRange = this.container.querySelector('.triangle_stroke_dash_range');
         this.strokeDashRange.oninput = function (e) {
             __self.strokeDash = this.value;
         }
 
         // range: stroke_width
-        this.strokeWidthRange = this.container.querySelector('.line_stroke_width_range');
+        this.strokeWidthRange = this.container.querySelector('.triangle_stroke_width_range');
         this.strokeWidthRange.oninput = function (e) {
             __self.strokeWidth = this.value;
         }
 
-        // range: stroke_opacity
-        this.strokeOpacityRange = this.container.querySelector('.line_stroke_opacity_range');
-        this.strokeOpacityRange.oninput = function (e) {
+        // range: fill_opacity
+        this.fillOpacityRange = this.container.querySelector('.triangle_fill_opacity_range');
+        this.fillOpacityRange.oninput = function (e) {
             __self.strokeOpacity = this.value;
         }
     }

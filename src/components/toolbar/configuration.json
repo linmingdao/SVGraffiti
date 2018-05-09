@@ -13,13 +13,6 @@
         "local_preference": true
     },
     {
-        "tag": "dashline",
-        "icon": "/src/img/dashline.svg",
-        "icon_active": "/src/img/dashline_active.svg",
-        "type": "function",
-        "local_preference": true
-    },
-    {
         "tag": "curve",
         "icon": "/src/img/curve.svg",
         "icon_active": "/src/img/curve_active.svg",
