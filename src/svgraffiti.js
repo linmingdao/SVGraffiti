@@ -16,9 +16,8 @@ export default class SVGraffiti {
         this.settings = new Settings(this.layout.settings());
 
         // test
-        let downPoint = {},
-            movePoint = {},
-            upPoint = {};
+        let startPoint = null,
+            endPoint = null;
         let line = null;
         let begingDraw = false;
         const sketchpad = this.layout.sketchpad();
@@ -31,42 +30,58 @@ export default class SVGraffiti {
             }
         }
 
+        function fireEvent(elem, eventName) {
+            if (typeof (elem) == 'object') {
+                eventName = eventName.replace(/^on/i, '');
+                if (document.all) {
+                    eventName = "on" + eventName;
+                    elem.fireEvent(eventName);
+                } else {
+                    var evt = document.createEvent('HTMLEvents');
+                    evt.initEvent(eventName, true, true);
+                    elem.dispatchEvent(evt);
+                }
+            }
+        }
+
         sketchpad.onmousedown = function (down_e) {
-            downPoint = getPosition(down_e);
+            startPoint = getPosition(down_e);
             begingDraw = true;
         }
 
         sketchpad.onmousemove = function (move_e) {
+            move_e.preventDefault();
             if (begingDraw) {
                 if (line) {
                     line.remove();
                 }
-
-                movePoint = getPosition(move_e);
-
+                endPoint = getPosition(move_e);
                 line = new Stampers.Line({
-                    x1: downPoint.x,
-                    y1: downPoint.y,
-                    x2: movePoint.x,
-                    y2: movePoint.y
-                }).stroke('#21c863').strokeDash(10, 10).strokeOpacity(.2).affix(sketchpad);
+                    x1: startPoint.x,
+                    y1: startPoint.y,
+                    x2: endPoint.x,
+                    y2: endPoint.y
+                }).stroke('#21c863').strokeLinecap(Stampers.Line.LINECAP.ROUND).strokeDash(10, 10).strokeOpacity(.2).affix(sketchpad);
             }
         }
 
         sketchpad.onmouseup = function (up_e) {
-            if (begingDraw) {
-                begingDraw = false;
+            if (begingDraw && endPoint) {
                 line && line.remove();
-
-                upPoint = getPosition(up_e);
-
                 line = new Stampers.Line({
-                    x1: downPoint.x,
-                    y1: downPoint.y,
-                    x2: upPoint.x,
-                    y2: upPoint.y
+                    x1: startPoint.x,
+                    y1: startPoint.y,
+                    x2: endPoint.x,
+                    y2: endPoint.y
                 }).stroke('#21c863').affix(sketchpad);
             }
+            startPoint = null;
+            endPoint = null;
+            begingDraw = false;
+        }
+
+        sketchpad.onmouseleave = function () {
+            fireEvent(sketchpad, 'mouseup');
         }
     }
 
