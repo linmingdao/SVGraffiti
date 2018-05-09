@@ -1,4 +1,5 @@
 import './layout.scss';
+import './family-roboto.scss';
 import template from './layout.html';
 
 export default class Layout {

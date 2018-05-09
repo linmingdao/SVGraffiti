@@ -57,11 +57,15 @@ export default class SVGraffiti {
                 }
                 endPoint = getPosition(move_e);
                 line = new Stampers.Line({
-                    x1: startPoint.x,
-                    y1: startPoint.y,
-                    x2: endPoint.x,
-                    y2: endPoint.y
-                }).stroke('#21c863').strokeLinecap(Stampers.Line.LINECAP.ROUND).strokeDash(10, 10).strokeOpacity(.2).affix(sketchpad);
+                        x1: startPoint.x,
+                        y1: startPoint.y,
+                        x2: endPoint.x,
+                        y2: endPoint.y
+                    })
+                    .stroke('#21c863')
+                    .strokeLinecap(Stampers.Line.LINECAP.ROUND)
+                    .strokeDash(10, 10).strokeOpacity(.2)
+                    .affix(sketchpad);
             }
         }
 
@@ -69,11 +73,14 @@ export default class SVGraffiti {
             if (begingDraw && endPoint) {
                 line && line.remove();
                 line = new Stampers.Line({
-                    x1: startPoint.x,
-                    y1: startPoint.y,
-                    x2: endPoint.x,
-                    y2: endPoint.y
-                }).stroke('#21c863').affix(sketchpad);
+                        x1: startPoint.x,
+                        y1: startPoint.y,
+                        x2: endPoint.x,
+                        y2: endPoint.y
+                    })
+                    .stroke('#21c863')
+                    .strokeLinecap(Stampers.Line.LINECAP.ROUND)
+                    .affix(sketchpad);
             }
             startPoint = null;
             endPoint = null;
