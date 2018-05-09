@@ -6,7 +6,7 @@
     /******************************************************** 工具类方法 ********************************************************/
 
     var Utils = {
-        addHandler: function (element, type, handler) {// 添加句柄
+        addHandler: function (element, type, handler) { // 添加句柄
             if (element.addEventListener) {
                 element.addEventListener(type, handler, false);
             } else if (element.attachEvent) {
@@ -15,7 +15,7 @@
                 element['on' + type] = handler;
             }
         },
-        removeHandler: function (element, type, handler) {// 删除句柄
+        removeHandler: function (element, type, handler) { // 删除句柄
             if (element.removeEventListener) {
                 element.removeEventListener(type, handler, false);
             } else if (element.detachEvent) {
@@ -24,7 +24,7 @@
                 element['on' + type] = null;
             }
         },
-        getEvent: function (event) {// 获取event对象
+        getEvent: function (event) { // 获取event对象
             return event ? event : window.event;
         },
         getType: function (event) {
@@ -33,21 +33,21 @@
         getElement: function (event) {
             return event.target || event.srcElement;
         },
-        preventDefault: function (event) {//阻止浏览器默认行为
+        preventDefault: function (event) { //阻止浏览器默认行为
             if (event.preventDefault) {
                 event.preventDefault();
             } else {
                 event.returnValue = false;
             }
         },
-        stopPropagation: function (event) {//阻止事件冒泡
+        stopPropagation: function (event) { //阻止事件冒泡
             if (event.stopPropagation) {
                 event.stopPropagation();
             } else {
                 event.cancelBubble = true;
             }
         },
-        forbidUserSelect: function ($region) {// 节点不可被鼠标选中
+        forbidUserSelect: function ($region) { // 节点不可被鼠标选中
             $region
                 .attr("unselectable", "on")
                 .css({
@@ -63,19 +63,19 @@
                     return false;
                 });
         },
-        forbidScrollBar: function ($region) {// 节点禁用滚动条
+        forbidScrollBar: function ($region) { // 节点禁用滚动条
             $region.css("overflow", "hidden");
         },
-        calDegree: function (x1, y1, x2, y2) {// 计算线段与水平线的夹角
+        calDegree: function (x1, y1, x2, y2) { // 计算线段与水平线的夹角
             var dis = Utils.calDistance(x1, y1, x2, y2);
             var cos = Math.abs(x2 - x1) / dis;
             var degree = Math.acos(cos) * 180 / Math.PI;
             if (x1 < x2) {
-                if (y1 > y2) {//逆时针旋转
+                if (y1 > y2) { //逆时针旋转
                     degree = -degree;
                 }
             } else {
-                if (y1 < y2) {//逆时针旋转
+                if (y1 < y2) { //逆时针旋转
                     degree = 180 - degree;
                 } else {
                     degree = 180 - degree;
@@ -84,28 +84,29 @@
             }
             return degree;
         },
-        calDistance: function (x1, y1, x2, y2) {// 计算两点之间的距离
+        calDistance: function (x1, y1, x2, y2) { // 计算两点之间的距离
             var disX = Math.abs(x1 - x2);
             var disY = Math.abs(y1 - y2);
             return Math.pow((disX * disX + disY * disY), 0.5);
         },
-        calMidpoint: function (x1, y1, x2, y2) {// 计算两点的中点
+        calMidpoint: function (x1, y1, x2, y2) { // 计算两点的中点
             return {
                 x: (x1 + x2) / 2,
                 y: (y1 + y2) / 2
             };
         },
-        getCurrentTimeMillis: function () {// 返回 1970 年 1 月 1 日至今的毫秒数，可以用来设置某时刻创建对象时的唯一ID
+        getCurrentTimeMillis: function () { // 返回 1970 年 1 月 1 日至今的毫秒数，可以用来设置某时刻创建对象时的唯一ID
             return new Date().getTime();
         },
-        calMatrix: function (x1, y1, x2, y2) {// 已知对称轴的两点，求对称矩阵
+        calMatrix: function (x1, y1, x2, y2) { // 已知对称轴的两点，求对称矩阵
             var a = y1 - y2;
             var b = x2 - x1;
             var c = x1 * y2 - x2 * y1;
             return [(b * b - a * a) / (a * a + b * b), -2 * a * b / (a * a + b * b), -2 * a * b / (a * a + b * b),
-                (a * a - b * b) / (a * a + b * b), -2 * a * c / (a * a + b * b), -2 * b * c / (a * a + b * b)];
+                (a * a - b * b) / (a * a + b * b), -2 * a * c / (a * a + b * b), -2 * b * c / (a * a + b * b)
+            ];
         },
-        calBezierCtrlPoint: function (ps, i, a, b) {// 计算三次贝塞尔控制点
+        calBezierCtrlPoint: function (ps, i, a, b) { // 计算三次贝塞尔控制点
             if (!a || !b) {
                 a = 0.25;
                 b = 0.25;
@@ -131,8 +132,14 @@
                 pBy = ps[i + 1].y - (ps[i + 2].y - ps[i].y) * b;
             }
             return {
-                pA: {x: pAx, y: pAy},
-                pB: {x: pBx, y: pBy}
+                pA: {
+                    x: pAx,
+                    y: pAy
+                },
+                pB: {
+                    x: pBx,
+                    y: pBy
+                }
             }
         }
     };
@@ -206,19 +213,38 @@
     var increment_x = $svg_line.width() / 5;
     var increment_y = $svg_line.height() / 5;
 
-    var bezierPoints = [
-        {x: 10, y: 4 * $svg_line.height() / 5},
-        {x: 6 + increment_x, y: 4 * $svg_line.height() / 5 - increment_y},
-        {x: 6 + 2 * increment_x, y: 4 * $svg_line.height() / 5 - 3 * increment_y},
-        {x: 6 + 3 * increment_x, y: 4 * $svg_line.height() / 5 - 3 * increment_y},
-        {x: 6 + 3.5 * increment_x, y: $svg_line.height() / 2},
-        {x: 6 + 4 * increment_x, y: 4 * $svg_line.height() / 5 + increment_y / 3},
-        {x: $svg_line.width() - 10, y: 2 * $svg_line.height() / 5}
+    var bezierPoints = [{
+            x: 10,
+            y: 4 * $svg_line.height() / 5
+        },
+        {
+            x: 6 + increment_x,
+            y: 4 * $svg_line.height() / 5 - increment_y
+        },
+        {
+            x: 6 + 2 * increment_x,
+            y: 4 * $svg_line.height() / 5 - 3 * increment_y
+        },
+        {
+            x: 6 + 3 * increment_x,
+            y: 4 * $svg_line.height() / 5 - 3 * increment_y
+        },
+        {
+            x: 6 + 3.5 * increment_x,
+            y: $svg_line.height() / 2
+        },
+        {
+            x: 6 + 4 * increment_x,
+            y: 4 * $svg_line.height() / 5 + increment_y / 3
+        },
+        {
+            x: $svg_line.width() - 10,
+            y: 2 * $svg_line.height() / 5
+        }
     ];
     var bezierPathStr = "";
     for (var i = 0; i < bezierPoints.length; i++) {
-        if (i == 0) {
-        } else {
+        if (i == 0) {} else {
             var ctrlP = Utils.calBezierCtrlPoint(bezierPoints, i - 1);
             // 记录笔迹数据
             bezierPathStr += "M" + bezierPoints[i - 1].x + " " + bezierPoints[i - 1].y + "C" + ctrlP.pA.x + " " + ctrlP.pA.y + " " + ctrlP.pB.x + " " + ctrlP.pB.y + " " + bezierPoints[i].x + " " + bezierPoints[i].y;
@@ -230,7 +256,7 @@
         strokeWidth: 6,
         fill: "none",
         "stroke-opacity": 0.7,
-        "stroke-linecap": "round"// 处理锯齿
+        "stroke-linecap": "round" // 处理锯齿
     });
 
     bezierPoints.forEach(function (point) {
@@ -239,7 +265,7 @@
             fill: "#fff",
             strokeWidth: 6,
             "stroke-opacity": 0.3,
-            "stroke-linecap": "round"// 处理锯齿
+            "stroke-linecap": "round" // 处理锯齿
         });
     });
 
@@ -617,8 +643,11 @@
             var moveX = moveEvent.clientX - $graffitiPanel.offset().left;
             var moveY = moveEvent.clientY - $graffitiPanel.offset().top;
             if (drawLineBusiness.line) {
-//                drawLineBusiness.line.attr({"x2": moveX, "y2": moveY, "visibility": ""});
-                drawLineBusiness.line.attr({"x2": moveX, "y2": moveY});
+                //                drawLineBusiness.line.attr({"x2": moveX, "y2": moveY, "visibility": ""});
+                drawLineBusiness.line.attr({
+                    "x2": moveX,
+                    "y2": moveY
+                });
             } else {
                 drawLineBusiness.line = svg.paper.line(drawLineBusiness.downX, drawLineBusiness.downY, moveX, moveY).attr({
                     stroke: currentDrawColor,
@@ -628,7 +657,9 @@
                 }).drag();
 
                 if (drawLineBusiness.isDashed) {
-                    drawLineBusiness.line.attr({"stroke-dasharray": "14,14"});
+                    drawLineBusiness.line.attr({
+                        "stroke-dasharray": "14,14"
+                    });
                 }
             }
         },
@@ -636,8 +667,14 @@
             var upX = upEvent.clientX - $graffitiPanel.offset().left;
             var upY = upEvent.clientY - $graffitiPanel.offset().top;
 
-            drawLineBusiness.line.attr({"x2": upX, "y2": upY, "visibility": ""});
-            drawLineBusiness.line.attr({"stroke-opacity": 0.7});
+            drawLineBusiness.line.attr({
+                "x2": upX,
+                "y2": upY,
+                "visibility": ""
+            });
+            drawLineBusiness.line.attr({
+                "stroke-opacity": 0.7
+            });
 
             if (drawLineBusiness.lineCanBeDrag) {
                 drawLineBusiness.line.mousedown(function (evt) {
@@ -839,11 +876,11 @@
         downX: null,
         downY: null,
         startPoint: null,
-        polygon: null,// 记录当前已经绘制的多边形
-        line: null,// 记录当前线段信息
-        connPoint: null,// 记录当前的连接点
-        segments: [],// 记录临时线段信息
-        vertex: [],// 记录顶点信息
+        polygon: null, // 记录当前已经绘制的多边形
+        line: null, // 记录当前线段信息
+        connPoint: null, // 记录当前的连接点
+        segments: [], // 记录临时线段信息
+        vertex: [], // 记录顶点信息
         canBeDrag: false,
         resetState: function () {
             drawPolygonBusiness.downX = null;
@@ -871,7 +908,8 @@
             var moveX = moveEvent.clientX - $graffitiPanel.offset().left;
             var moveY = moveEvent.clientY - $graffitiPanel.offset().top;
 
-            var startX = drawPolygonBusiness.downX, startY = drawPolygonBusiness.downY;
+            var startX = drawPolygonBusiness.downX,
+                startY = drawPolygonBusiness.downY;
             if (drawPolygonBusiness.connPoint) {
                 startX = drawPolygonBusiness.connPoint.x;
                 startY = drawPolygonBusiness.connPoint.y;
@@ -952,15 +990,21 @@
             lastPX = graffitiBusiness.downX;
             lastPY = graffitiBusiness.downY;
 
-            graffitiBusiness.points.push({x: lastPX, y: lastPY});
+            graffitiBusiness.points.push({
+                x: lastPX,
+                y: lastPY
+            });
         },
         onMouseMove: function (moveEvent) {
             var moveX = moveEvent.clientX - $graffitiPanel.offset().left;
             var moveY = moveEvent.clientY - $graffitiPanel.offset().top;
 
-//            if (Utils.calDistance(lastPX, lastPY, moveX, moveY) > 3) {
-            graffitiBusiness.points.push({x: (lastPX + moveX) / 2, y: (lastPY + moveY) / 2});
-//            }
+            //            if (Utils.calDistance(lastPX, lastPY, moveX, moveY) > 3) {
+            graffitiBusiness.points.push({
+                x: (lastPX + moveX) / 2,
+                y: (lastPY + moveY) / 2
+            });
+            //            }
 
             if (lastPath) {
                 lastPath.remove();
@@ -977,7 +1021,7 @@
                 stroke: currentDrawColor,
                 strokeWidth: 3,
                 "stroke-opacity": 0.2,
-                "stroke-linecap": "round"// 处理锯齿
+                "stroke-linecap": "round" // 处理锯齿
             });
 
             lastPath = currentPath;
@@ -989,7 +1033,10 @@
             var upX = upEvent.clientX - $graffitiPanel.offset().left;
             var upY = upEvent.clientY - $graffitiPanel.offset().top;
 
-            graffitiBusiness.points.push({x: upX, y: upY});
+            graffitiBusiness.points.push({
+                x: upX,
+                y: upY
+            });
 
             currentPath.remove();
 
@@ -1079,7 +1126,7 @@
                     stroke: "#fff",
                     strokeWidth: 10,
                     "stroke-opacity": 1,
-                    "stroke-linecap": "round"// 处理锯齿
+                    "stroke-linecap": "round" // 处理锯齿
                 });
 
                 lastPath = currentPath;

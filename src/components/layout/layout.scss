@@ -1,7 +1,6 @@
 @import './sidebar.scss';
 @import './scrollbar.scss';
 @import './settings.scss';
-
 // SVG画板区域
 .center {
     position: relative;
@@ -9,32 +8,25 @@
     height: 100%;
     background-color: #fff;
     overflow: hidden;
-
     svg {
         width: 100%;
         height: 100%;
     }
-
     div.settings_box {
         position: absolute;
         right: 0;
-        top: 0;
-        // width: 500px;
+        top: 0; // width: 500px;
         max-height: 100%;
         background-color: #dcdbdb;
-        overflow-y: auto;
-        // overflow-x: hidden;
-
+        overflow-y: auto; // overflow-x: hidden;
         border-bottom-left-radius: 10px;
         border-top-left-radius: 10px;
-
         div.setting_item {
             // width: 100%;
             // height: 400px;
             // box-sizing: border-box;
             // background-color: #807676;
-            margin: 10px;
-            // border: 1px solid #fff;
+            margin: 10px; // border: 1px solid #fff;
         }
     }
 }

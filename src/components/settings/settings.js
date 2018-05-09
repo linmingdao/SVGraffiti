@@ -1,8 +1,8 @@
 import SubScatterer from '../../supports/pubsub/base/subscatterer';
 import Topics from '../../supports/pubsub/base/topics';
-import ColorPicker from './settings/ColorPicker';
-import Line from './settings/line/Line';
-import Triangle from './settings/triangle/Triangle';
+import ColorPicker from './preferences/ColorPicker';
+import Line from './preferences/line/Line';
+import Triangle from './preferences/triangle/Triangle';
 
 @Topics(['local_preference', 'global_preference', 'function'])
 export default class Settings extends SubScatterer {
