@@ -13,7 +13,7 @@ export default class LineBusiness extends SketchpadBaseClass {
     reset() {
         this.startPoint = null;
         this.endPoint = null;
-        this.line = null;
+        this.shape = null;
         this.begingDraw = false;
     }
 
@@ -27,11 +27,10 @@ export default class LineBusiness extends SketchpadBaseClass {
         event.preventDefault();
 
         if (this.begingDraw) {
-            if (this.line) {
-                this.line.remove();
-            }
+            this.shape && this.shape.remove();
+
             this.endPoint = this.getPosition(event);
-            this.line = new Line({
+            this.shape = new Line({
                     x1: this.startPoint.x,
                     y1: this.startPoint.y,
                     x2: this.endPoint.x,
@@ -39,15 +38,16 @@ export default class LineBusiness extends SketchpadBaseClass {
                 })
                 .stroke('#21c863')
                 .strokeLinecap(Line.LINECAP.ROUND)
-                .strokeDash(10, 10).strokeOpacity(.2)
+                .strokeDash(10, 10)
+                .strokeOpacity(.2)
                 .affix(this.getSketchpad());
         }
     }
 
     onmouseup(event) {
         if (this.begingDraw && this.endPoint) {
-            this.line && this.line.remove();
-            this.line = new Line({
+            this.shape && this.shape.remove();
+            this.shape = new Line({
                     x1: this.startPoint.x,
                     y1: this.startPoint.y,
                     x2: this.endPoint.x,
