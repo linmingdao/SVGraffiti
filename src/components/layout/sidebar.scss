@@ -1,13 +1,12 @@
 // 侧边工具栏
 .sidebar {
     background-color: #dcdbdb;
-    width: 120px;
+    width: 112px;
     height: 100%;
     float: right;
     overflow-y: auto;
-
-    // 侧边工具栏内部的控件
     div.item {
+        // 侧边工具栏内部的控件
         position: relative;
         height: 90px;
         width: 90px;
@@ -15,13 +14,12 @@
         border-radius: 20px;
         background-color: #eceeee;
         box-sizing: border-box;
-
         a.content {
             display: block;
             width: 100%;
             height: 100%;
-            border: 8px solid #fff;
-            border-radius: 20px;
+            border: 4px solid #fff;
+            border-radius: 12px;
             box-sizing: border-box;
             background-repeat: no-repeat;
             background-position-x: center;
@@ -31,7 +29,6 @@
         a.content:active {
             background-color: #96e4f0;
         }
-        
         a.cornermark {
             display: block;
             height: 35px;
@@ -53,7 +50,7 @@
     }
     div.item.enabled {
         background-color: #c1ecf3;
-        a.cornermark{
+        a.cornermark {
             background-image: url('../../img/cornermark.svg');
         }
         a.cornermark:active {
