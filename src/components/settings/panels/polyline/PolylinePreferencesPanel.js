@@ -1,9 +1,11 @@
 import ColorPicker from '../../../../supports/colorpicker/ColorPicker';
-import Slider from '../../../../supports/slider/Slider';
 import template from './template.html';
-import * as Stampers from '../../../../supports/svg-stamper/stampers-mixin';
+import Slider from '../../../../supports/slider/Slider';
+import {
+    Polyline
+} from '../../../../supports/svg-stamper/stampers-mixin';
 
-export default class Triangle {
+export default class PolylinePreferencesPanel {
 
     constructor(container) {
         this.container = container;
@@ -18,10 +20,9 @@ export default class Triangle {
             enumerable: true,
         };
 
-        let fillColorValue = '#1f47df';
         let strokeColorValue = '#1f47df';
-        let strokeDashValue = 6;
-        let strokeWidthValue = 3;
+        let strokeDashValue = 25;
+        let strokeWidthValue = 10;
         let strokeOpacityValue = .7;
         Object.defineProperties(this, {
             strokeColor: {
@@ -33,18 +34,6 @@ export default class Triangle {
                 },
                 get: function () {
                     return strokeColorValue;
-                },
-                ...common_configure
-            },
-            fillColor: {
-                set: function (newVal) {
-                    if (fillColorValue !== newVal) {
-                        fillColorValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return fillColorValue;
                 },
                 ...common_configure
             },
@@ -87,26 +76,31 @@ export default class Triangle {
         });
     }
 
+    getPreviewPaper() {
+        !this.previewPaper && (this.previewPaper = this.$view.querySelector('.polyline_preview_paper'));
+        return this.previewPaper;
+    }
+
     initRefScreen() {
-        this.$linePreview = this.$view.querySelector('.triangle_preview');
-        const polygon = new Stampers.Polygon({})
+        new Polyline({})
             .stroke('yellow')
-            .fill('pink')
-            .vertexs([50, 60], [200, 50], [150, 180])
-            .strokeWidth(2)
-            .affix(this.$linePreview);
+            .fill('none')
+            .strokeLinecap(Polyline.LINECAP.ROUND)
+            .vertexs([25, 100], [45, 20], [65, 180], [85, 20], [105, 180], [125, 20], [145, 180], [165, 20], [185, 180], [205, 20])
+            .strokeWidth(5)
+            .strokeOpacity(.5)
+            .affix(this.getPreviewPaper());
     }
 
     updatePreviewScreen() {
-        this.preview && this.preview.remove();
-        this.preview = new Stampers.Polygon({})
-            .stroke(this.strokeColor)
-            .strokeDash(this.strokeDash, this.strokeDash)
-            .fill(this.fillColor)
-            .fillOpacity(this.strokeOpacity)
-            .vertexs([150, 60], [300, 50], [250, 180])
-            .strokeWidth(this.strokeWidth)
-            .affix(this.$linePreview);
+        this.previewLine && this.previewLine.remove();
+        this.previewLine = new Polyline({})
+            .stroke('green')
+            .fill('none')
+            .strokeLinecap(Polyline.LINECAP.ROUND)
+            .vertexs([125, 100], [145, 20], [165, 180], [185, 20], [205, 180], [225, 20], [245, 180], [265, 20], [285, 180], [305, 20], [325, 100], [370, 100])
+            .strokeWidth(5)
+            .affix(this.getPreviewPaper());
     }
 
     init() {
@@ -123,47 +117,41 @@ export default class Triangle {
         this.initRefScreen();
         this.updatePreviewScreen();
 
-        // stroke color picker
+        // color picker
         new ColorPicker({
-            el: this.$view.querySelector('.triangle_stroke_color'),
+            el: this.$view.querySelector('.color_picker'),
             components: ['gradient']
         }).onColorChange(color => {
             this.strokeColor = color;
         });
 
-        // fill color picker
-        new ColorPicker({
-            el: this.$view.querySelector('.triangle_fill_color'),
-            components: ['gradient']
-        }).onColorChange(color => {
-            this.fillColor = color;
-        });
-
         // range: stroke_dash
-        this.strokeDashRange = this.container.querySelector('.triangle_stroke_dash_range');
+        this.strokeDashRange = this.container.querySelector('.line_stroke_dash_range');
         this.strokeDashRange.oninput = function (e) {
             __self.strokeDash = this.value;
         }
 
         // range: stroke_width
-        this.strokeWidthRange = this.container.querySelector('.triangle_stroke_width_range');
+        this.strokeWidthRange = this.container.querySelector('.line_stroke_width_range');
         this.strokeWidthRange.oninput = function (e) {
             __self.strokeWidth = this.value;
         }
 
-        // range: fill_opacity
-        this.fillOpacityRange = this.container.querySelector('.triangle_fill_opacity_range');
-        this.fillOpacityRange.oninput = function (e) {
+        // range: stroke_opacity
+        this.strokeOpacityRange = this.container.querySelector('.line_stroke_opacity_range');
+        this.strokeOpacityRange.oninput = function (e) {
             __self.strokeOpacity = this.value;
         }
     }
 
     show() {
         this.$view.style.display = 'block';
+        return this;
     }
 
     hide() {
         this.$view.style.display = 'none';
+        return this;
     }
 
     getView() {

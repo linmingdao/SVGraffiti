@@ -1,6 +1,6 @@
-import ClrPicker from '../../../supports/colorpicker/ColorPicker';
+import ColorPicker from '../../../supports/colorpicker/ColorPicker';
 
-export default class ColorPicker {
+export default class ColorPickerPanel {
 
     constructor(container) {
         this.container = container;
@@ -11,7 +11,7 @@ export default class ColorPicker {
         this.$view = document.createElement('div');
         this.$view.className = `setting_item`;
 
-        this.clrPicker = new ClrPicker({
+        this.clrPicker = new ColorPicker({
             el: this.$view,
             components: ['presets', 'gradient', 'depth', 'operator']
         });
@@ -21,10 +21,12 @@ export default class ColorPicker {
 
     show() {
         this.$view.style.display = 'block';
+        return this;
     }
 
     hide() {
         this.$view.style.display = 'none';
+        return this;
     }
 
     getView() {

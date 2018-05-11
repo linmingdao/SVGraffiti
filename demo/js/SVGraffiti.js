@@ -259,6 +259,8 @@
         "stroke-linecap": "round" // 处理锯齿
     });
 
+    console.log(bezierPathStr)
+
     bezierPoints.forEach(function (point) {
         svg_line.paper.circle(point.x, point.y, 5).attr({
             stroke: "red",
