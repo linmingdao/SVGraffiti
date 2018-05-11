@@ -18,83 +18,75 @@ export default class PolygonBusiness extends SketchpadBaseClass {
     }
 
     reset() {
-        this.movePoint = null;
-
-        this.isClosed = false;
-
-        this.line = null;
-
+        this.CRITICAL_VALUE = 10;
+        this.edge = null;
         this.shape = null;
-
-        this.connPoint = null; // 记录当前的连接点
-        this.lastConnPoint = null; // 记录当前的连接点
-
+        this.startPoint = null;
+        this.movePoint = null;
+        this.currentConnPoint = null;
         this.segments = []; // 记录临时线段信息
-
-        this.vertex = []; // 记录顶点信息
+        this.vertexs = []; // 记录顶点信息
     }
 
     onmousedown(event) {
-        // 还未形成闭合的多边形则继续绘制
-        if (!this.isClosed && this.connPoint) {
-            this.downPoint = this.getPosition(event);
-            this.line = new Line({
-                    x1: this.connPoint.x,
-                    y1: this.connPoint.y,
-                    x2: this.downPoint.x,
-                    y2: this.downPoint.y
-                }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND)
-                .strokeOpacity(1).affix(this.getSketchpad());
-        }
-
-        // 记录连接点
-        this.connPoint = this.getPosition(event);
-        this.lastConnPoint = this.connPoint;
-        this.movePoint = null;
-
-        calDistance(connPoint.x, connPoint.y, this.lastConnPoint.x, this.lastConnPoint.y) > 20
-        this.vertex.push(this.connPoint);
-
-        console.log(this.vertex);
+        const downPoint = this.getPosition(event);
+        // 初始化第一个连接点
+        !this.startPoint && (this.currentConnPoint = downPoint);
+        // 初始化 并 记录起点
+        !this.startPoint && (this.startPoint = downPoint, this.vertexs.push([this.startPoint.x, this.startPoint.y]));
     }
 
     onmousemove(event) {
-        if (!this.isClosed && this.connPoint) {
-            this.line && this.line.remove();
-
+        if (this.currentConnPoint) {
+            this.edge && this.edge.remove();
             // 绘制多边形的临时边
             this.movePoint = this.getPosition(event);
-            this.line = new Line({
-                    x1: this.connPoint.x,
-                    y1: this.connPoint.y,
+            if (calDistance(this.currentConnPoint.x, this.currentConnPoint.y, this.movePoint.x, this.movePoint.y) > this.CRITICAL_VALUE) {
+                this.edge = new Line({
+                    x1: this.currentConnPoint.x,
+                    y1: this.currentConnPoint.y,
                     x2: this.movePoint.x,
                     y2: this.movePoint.y
-                }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND)
-                .strokeOpacity(1).affix(this.getSketchpad());
+                }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND).strokeOpacity(.5).affix(this.getSketchpad());
+            }
         }
     }
 
     onmouseup(event) {
-        this.segments.push(this.line) && (this.line = null);
-        if (this.movePoint) {
-            console.log('新的连接点');
+        // 移除模糊状态的临时边
+        this.edge && this.edge.remove() && (this.edge = null);
 
-            // 有移动，更新最新的连接点
-            this.connPoint = this.movePoint;
-            this.vertex.push(this.connPoint)
-        }
-        console.log(this.vertex);
-    }
-
-    isANewConnPoint(connPoint) {
-        if (this.lastConnPoint) {
-            return calDistance(connPoint.x, connPoint.y, this.lastConnPoint.x, this.lastConnPoint.y) > 20;
+        // 是否闭合
+        if (this.startPoint && this.movePoint && calDistance(this.startPoint.x, this.startPoint.y, this.movePoint.x, this.movePoint.y) < this.CRITICAL_VALUE) {
+            this.segments.forEach(edge => {
+                edge.remove();
+            });
+            this.shape = new Polygon({})
+                .stroke('black')
+                .strokeWidth(2)
+                .fill('black')
+                .fillOpacity(.5)
+                .vertexs(this.vertexs)
+                .affix(this.getSketchpad());
+            this.reset();
         } else {
-            return true;
+            if (this.currentConnPoint && this.movePoint) {
+                if (calDistance(this.currentConnPoint.x, this.currentConnPoint.y, this.movePoint.x, this.movePoint.y) > 10) {
+                    // 记录顶点
+                    this.vertexs.push([this.movePoint.x, this.movePoint.y]);
+                    // 绘制没有闭合之前的临时边
+                    this.segments.push(
+                        new Line({
+                            x1: this.currentConnPoint.x,
+                            y1: this.currentConnPoint.y,
+                            x2: this.movePoint.x,
+                            y2: this.movePoint.y
+                        }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND).strokeOpacity(1).affix(this.getSketchpad())
+                    );
+                    // 重置当前的连接点
+                    this.currentConnPoint = this.movePoint;
+                }
+            }
         }
     }
-
-    // onclick() {
-    //     console.log('lll')
-    // }
 }

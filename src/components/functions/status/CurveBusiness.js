@@ -46,6 +46,7 @@ export default class CurveBusiness extends SketchpadBaseClass {
     constructor(sketchpad) {
         super(sketchpad);
         this.reset();
+        this.setBusinessMode(CurveBusiness.MODE.CURVE);
     }
 
     reset() {
@@ -58,6 +59,10 @@ export default class CurveBusiness extends SketchpadBaseClass {
         this.shape = null;
 
         this.begingDraw = false;
+    }
+
+    setBusinessMode(mode) {
+        this.businessMode = mode;
     }
 
     onmousedown(event) {
@@ -93,15 +98,27 @@ export default class CurveBusiness extends SketchpadBaseClass {
             // 记录笔迹数据
             this.pathChunk += `M${this.lastPoint.x} ${this.lastPoint.y}Q${ctrlPoint.x} ${ctrlPoint.y} ${this.movePoint.x} ${this.movePoint.y}`;
 
-            // 绘制笔迹
-            this.shape = new Path({
-                    'd': this.pathChunk
-                })
-                .stroke('#21c863')
-                .strokeWidth(3)
-                .strokeLinecap(Path.LINECAP.ROUND)
-                .strokeOpacity(.2)
-                .affix(this.getSketchpad());
+            if (this.businessMode === CurveBusiness.MODE.ERASER) {
+                // 绘制橡皮擦轨迹
+                this.shape = new Path({
+                        'd': this.pathChunk
+                    })
+                    .stroke('#fff')
+                    .strokeWidth(10)
+                    .strokeLinecap(Path.LINECAP.ROUND)
+                    .strokeOpacity(1)
+                    .affix(this.getSketchpad());
+            } else {
+                // 绘制笔迹
+                this.shape = new Path({
+                        'd': this.pathChunk
+                    })
+                    .stroke('#21c863')
+                    .strokeWidth(3)
+                    .strokeLinecap(Path.LINECAP.ROUND)
+                    .strokeOpacity(.2)
+                    .affix(this.getSketchpad());
+            }
 
             this.lastPoint = this.movePoint;
         }
@@ -127,18 +144,35 @@ export default class CurveBusiness extends SketchpadBaseClass {
                 this.pathChunk += `M${this.points[i - 1].x} ${this.points[i - 1].y}C${ctrlP.pA.x} ${ctrlP.pA.y} ${ctrlP.pB.x} ${ctrlP.pB.y} ${this.points[i].x} ${this.points[i].y}`;
             }
 
-            // 绘制整段曲线
-            this.shape = new Path({
-                    'd': this.pathChunk
-                })
-                .stroke('#21c863')
-                .strokeWidth(3)
-                .strokeLinecap(Path.LINECAP.ROUND)
-                // .strokeDash(10, 10)
-                .strokeOpacity(1)
-                .affix(this.getSketchpad());
+            if (this.businessMode === CurveBusiness.MODE.ERASER) {
+                // 绘制整段橡皮擦轨迹
+                this.shape = new Path({
+                        'd': this.pathChunk
+                    })
+                    .stroke('#fff')
+                    .strokeWidth(10)
+                    .strokeLinecap(Path.LINECAP.ROUND)
+                    .strokeOpacity(1)
+                    .affix(this.getSketchpad());
+            } else {
+                // 绘制整段曲线轨迹
+                this.shape = new Path({
+                        'd': this.pathChunk
+                    })
+                    .stroke('#21c863')
+                    .strokeWidth(3)
+                    .strokeLinecap(Path.LINECAP.ROUND)
+                    // .strokeDash(10, 10)
+                    .strokeOpacity(1)
+                    .affix(this.getSketchpad());
+            }
         }
 
         this.reset();
     }
 }
+
+CurveBusiness.MODE = {
+    CURVE: 'curve',
+    ERASER: 'eraser'
+};

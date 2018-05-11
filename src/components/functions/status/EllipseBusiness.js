@@ -23,6 +23,7 @@ export default class EllipseBusiness extends SketchpadBaseClass {
     constructor(sketchpad) {
         super(sketchpad);
         this.reset();
+        this.setBusinessMode(EllipseBusiness.MODE.ELLIPSE);
     }
 
     reset() {
@@ -30,6 +31,10 @@ export default class EllipseBusiness extends SketchpadBaseClass {
         this.movePoint = null;
         this.shape = null;
         this.begingDraw = false;
+    }
+
+    setBusinessMode(mode) {
+        this.businessMode = mode;
     }
 
     onmousedown(event) {
@@ -49,9 +54,11 @@ export default class EllipseBusiness extends SketchpadBaseClass {
             // 计算圆心
             const center = calMidpoint(this.startPoint.x, this.startPoint.y, this.movePoint.x, this.movePoint.y);
             // 计算水平方向的半径
-            const hr = calDistance(this.startPoint.x, this.startPoint.y, this.movePoint.x, this.startPoint.y) / 2;
+            let hr = calDistance(this.startPoint.x, this.startPoint.y, this.movePoint.x, this.startPoint.y) / 2;
             // 计算垂直方向半径
-            const vr = calDistance(this.startPoint.x, this.startPoint.y, this.startPoint.x, this.movePoint.y) / 2;
+            let vr = calDistance(this.startPoint.x, this.startPoint.y, this.startPoint.x, this.movePoint.y) / 2;
+
+            this.businessMode === EllipseBusiness.MODE.CIRCLE && (hr = vr = Math.max(hr, vr));
 
             // 绘制新的圆
             this.shape = new Ellipse({})
@@ -72,3 +79,8 @@ export default class EllipseBusiness extends SketchpadBaseClass {
         }
     }
 }
+
+EllipseBusiness.MODE = {
+    ELLIPSE: 'ellipse',
+    CIRCLE: 'circle'
+};

@@ -1,44 +1,67 @@
+import Subscriber from '../../supports/pubsub/base/subscriber';
+import Topics from '../../supports/pubsub/base/topics';
 import {
     LineBusiness,
     CurveBusiness,
     RightTriangleBusiness,
     RectangleBusiness,
-    CircleBusiness,
     EllipseBusiness,
     PolygonBusiness
 } from '../functions/functions-mixin';
 
-export default class Sketchpad {
+const FUNCTIONS_CREATOR = {
+    line: LineBusiness,
+    curve: CurveBusiness,
+    eraser: CurveBusiness,
+    triangle: RightTriangleBusiness,
+    rect: RectangleBusiness,
+    ellipse: EllipseBusiness,
+    polygon: PolygonBusiness,
+    polyline: PolygonBusiness
+};
+
+@Topics(['function'])
+export default class Sketchpad extends Subscriber {
 
     constructor(sketchpad) {
+        super();
         this.sketchpad = sketchpad;
+        this.functionsPool = {};
+        this.bindEvent();
+    }
 
-        // const currentBusiness = new LineBusiness(this.sketchpad);
-        // const currentBusiness = new CurveBusiness(this.sketchpad);
-        // const currentBusiness = new RightTriangleBusiness(this.sketchpad);
-        // const currentBusiness = new RectangleBusiness(this.sketchpad);
-        // const currentBusiness = new CircleBusiness(this.sketchpad);
-        // const currentBusiness = new EllipseBusiness(this.sketchpad);
-        const currentBusiness = new PolygonBusiness(this.sketchpad);
+    notify(topic, entity) {
+        if (topic === 'function') {
+            if (entity === 'curve' || entity === 'eraser') {
+                if (!this.functionsPool['curve'] && !this.functionsPool['eraser']) {
+                    this.functionsPool['curve'] = this.functionsPool['eraser'] = new CurveBusiness(this.sketchpad);
+                }
+                this.functionsPool['curve'].setBusinessMode(entity === 'eraser' ? CurveBusiness.MODE.ERASER : CurveBusiness.MODE.CURVE);
+            } else {
+                if (!this.functionsPool[entity]) {
+                    this.functionsPool[entity] = new FUNCTIONS_CREATOR[entity](this.sketchpad);
+                }
+            }
+            this.currentBusiness = this.functionsPool[entity];
+        }
+    }
 
+    bindEvent() {
+        const __self = this;
         this.sketchpad.onmousedown = function (event) {
-            currentBusiness.onmousedown(event);
+            __self.currentBusiness && __self.currentBusiness.onmousedown && __self.currentBusiness.onmousedown(event);
         }
-
         this.sketchpad.onmousemove = function (event) {
-            currentBusiness.onmousemove(event);
+            __self.currentBusiness && __self.currentBusiness.onmousemove && __self.currentBusiness.onmousemove(event);
         }
-
         this.sketchpad.onmouseup = function (event) {
-            currentBusiness.onmouseup(event);
+            __self.currentBusiness && __self.currentBusiness.onmouseup && __self.currentBusiness.onmouseup(event);
         }
-
         this.sketchpad.onclick = function (event) {
-            currentBusiness.onclick && currentBusiness.onclick(event);
+            __self.currentBusiness && __self.currentBusiness.onclick && __self.currentBusiness.onclick(event);
         }
-
         this.sketchpad.onmouseleave = function (event) {
-            currentBusiness.onmouseleave(event);
+            __self.currentBusiness && __self.currentBusiness.onmouseleave && __self.currentBusiness.onmouseleave(event);
         }
     }
 }
