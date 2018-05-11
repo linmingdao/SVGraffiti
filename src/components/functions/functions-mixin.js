@@ -4,6 +4,7 @@ import RightTriangleBusiness from './status/RightTriangleBusiness';
 import RectangleBusiness from './status/RectangleBusiness';
 import CircleBusiness from './status/CircleBusiness';
 import EllipseBusiness from './status/EllipseBusiness';
+import PolygonBusiness from './status/PolygonBusiness';
 
 export {
     LineBusiness,
@@ -11,5 +12,6 @@ export {
     RightTriangleBusiness,
     RectangleBusiness,
     CircleBusiness,
-    EllipseBusiness
+    EllipseBusiness,
+    PolygonBusiness
 }

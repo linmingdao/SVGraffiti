@@ -4,7 +4,8 @@ import {
     RightTriangleBusiness,
     RectangleBusiness,
     CircleBusiness,
-    EllipseBusiness
+    EllipseBusiness,
+    PolygonBusiness
 } from '../functions/functions-mixin';
 
 export default class Sketchpad {
@@ -17,7 +18,8 @@ export default class Sketchpad {
         // const currentBusiness = new RightTriangleBusiness(this.sketchpad);
         // const currentBusiness = new RectangleBusiness(this.sketchpad);
         // const currentBusiness = new CircleBusiness(this.sketchpad);
-        const currentBusiness = new EllipseBusiness(this.sketchpad);
+        // const currentBusiness = new EllipseBusiness(this.sketchpad);
+        const currentBusiness = new PolygonBusiness(this.sketchpad);
 
         this.sketchpad.onmousedown = function (event) {
             currentBusiness.onmousedown(event);
@@ -29,6 +31,10 @@ export default class Sketchpad {
 
         this.sketchpad.onmouseup = function (event) {
             currentBusiness.onmouseup(event);
+        }
+
+        this.sketchpad.onclick = function (event) {
+            currentBusiness.onclick && currentBusiness.onclick(event);
         }
 
         this.sketchpad.onmouseleave = function (event) {
