@@ -12,8 +12,9 @@ function calDistance(x1, y1, x2, y2) { // 计算两点之间的距离
 
 export default class PolygonBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
     }
 
@@ -26,6 +27,10 @@ export default class PolygonBusiness extends SketchpadBaseClass {
         this.currentConnPoint = null;
         this.segments = []; // 记录临时线段信息
         this.vertexs = []; // 记录顶点信息
+    }
+
+    getPreferenceValue(name) {
+        return this.context.getPreferenceValue(name, 'polygon');
     }
 
     onmousedown(event) {
@@ -43,11 +48,17 @@ export default class PolygonBusiness extends SketchpadBaseClass {
             this.movePoint = this.getPosition(event);
             if (calDistance(this.currentConnPoint.x, this.currentConnPoint.y, this.movePoint.x, this.movePoint.y) > this.CRITICAL_VALUE) {
                 this.edge = new Line({
-                    x1: this.currentConnPoint.x,
-                    y1: this.currentConnPoint.y,
-                    x2: this.movePoint.x,
-                    y2: this.movePoint.y
-                }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND).strokeOpacity(.5).affix(this.getSketchpad());
+                        x1: this.currentConnPoint.x,
+                        y1: this.currentConnPoint.y,
+                        x2: this.movePoint.x,
+                        y2: this.movePoint.y
+                    })
+                    .stroke(this.getPreferenceValue('strokeColor'))
+                    .strokeDash(...this.getPreferenceValue('strokeDash'))
+                    .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                    .strokeOpacity(.2)
+                    .strokeLinecap(Line.LINECAP.ROUND)
+                    .affix(this.getSketchpad());
             }
         }
     }
@@ -62,10 +73,12 @@ export default class PolygonBusiness extends SketchpadBaseClass {
                 edge.remove();
             });
             this.shape = new Polygon({})
-                .stroke('black')
-                .strokeWidth(2)
-                .fill('black')
-                .fillOpacity(.5)
+                .fill(this.getPreferenceValue('fillColor'))
+                .fillOpacity(this.getPreferenceValue('fillOpacity'))
+                .stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
                 .vertexs(this.vertexs)
                 .affix(this.getSketchpad());
             this.reset();
@@ -81,7 +94,13 @@ export default class PolygonBusiness extends SketchpadBaseClass {
                             y1: this.currentConnPoint.y,
                             x2: this.movePoint.x,
                             y2: this.movePoint.y
-                        }).stroke('#21c863').strokeLinecap(Line.LINECAP.ROUND).strokeOpacity(1).affix(this.getSketchpad())
+                        })
+                        .stroke(this.getPreferenceValue('strokeColor'))
+                        .strokeDash(...this.getPreferenceValue('strokeDash'))
+                        .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                        .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
+                        .strokeLinecap(Line.LINECAP.ROUND)
+                        .affix(this.getSketchpad())
                     );
                     // 重置当前的连接点
                     this.currentConnPoint = this.movePoint;

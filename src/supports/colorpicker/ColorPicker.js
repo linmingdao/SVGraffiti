@@ -71,23 +71,23 @@ export default class ColorPicker {
         }
     }
 
-    onColorChangeFilter() {
-
-    }
-
     onColorChange(callback) {
         this.colorChangeCallback = callback;
+        return this;
     }
 
     onClickConfirmButton(callback) {
         this.confirmButtonCallback = callback;
+        return this;
     }
 
     onClickCancelButton(callback) {
         this.cancelButtonCallback = callback;
+        return this;
     }
 
     onClickGlobalToggleButton(callback) {
         this.globalToggleButtonCallback = callback;
+        return this;
     }
 }

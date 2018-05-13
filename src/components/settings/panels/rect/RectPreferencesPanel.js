@@ -4,97 +4,29 @@ import {
 import template from './template.html';
 import Slider from '../../../../supports/slider/Slider';
 import ColorPicker from '../../../../supports/colorpicker/ColorPicker';
+import PreferencePanel from '../PreferencePanel';
 
-export default class RectPreferencesPanel {
+export default class RectPreferencesPanel extends PreferencePanel {
 
     constructor(container) {
-        this.container = container;
-        this.init(container);
-    }
-
-    addWatch() {
-        const __self = this;
-
-        const common_configure = {
-            configurable: false,
-            enumerable: true,
-        };
-
-        let fillColorValue = '#1f47df';
-        let strokeColorValue = '#1f47df';
-        let strokeDashValue = 6;
-        let strokeWidthValue = 3;
-        let strokeOpacityValue = .7;
-        Object.defineProperties(this, {
-            strokeColor: {
-                set: function (newVal) {
-                    if (strokeColorValue !== newVal) {
-                        strokeColorValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return strokeColorValue;
-                },
-                ...common_configure
-            },
-            fillColor: {
-                set: function (newVal) {
-                    if (fillColorValue !== newVal) {
-                        fillColorValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return fillColorValue;
-                },
-                ...common_configure
-            },
-            strokeDash: {
-                set: function (newVal) {
-                    if (strokeDashValue !== newVal) {
-                        strokeDashValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return strokeDashValue;
-                },
-                ...common_configure
-            },
-            strokeWidth: {
-                set: function (newVal) {
-                    if (strokeWidthValue !== newVal) {
-                        strokeWidthValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return strokeWidthValue;
-                },
-                ...common_configure
-            },
-            strokeOpacity: {
-                set: function (newVal) {
-                    if (strokeOpacityValue !== newVal) {
-                        strokeOpacityValue = newVal;
-                        __self.updatePreviewScreen();
-                    }
-                },
-                get: function () {
-                    return strokeOpacityValue;
-                },
-                ...common_configure
-            }
+        super(container, template);
+        this.addWatch({
+            'fillColor': 'green',
+            'fillOpacity': .5,
+            'strokeColor': 'pink',
+            'strokeDash': [0, 0],
+            'strokeWidth': 2,
+            'strokeOpacity': 1,
+            'strokeRadius': 20,
         });
     }
 
-    getPreviewPaper() {
-        !this.previewPaper && (this.previewPaper = this.$view.querySelector('.rect_preview_paper'));
-        return this.previewPaper;
+    getPaper() {
+        !this.paper && (this.paper = this.getView().querySelector('.rect_paper'));
+        return this.paper;
     }
 
-    initRefScreen() {
+    createReference() {
         const rect = new Rect({
                 x: 30,
                 y: 15,
@@ -106,10 +38,10 @@ export default class RectPreferencesPanel {
             .strokeOpacity(1)
             .fill('red')
             .radius(20, 20)
-            .affix(this.getPreviewPaper());
+            .affix(this.getPaper());
     }
 
-    updatePreviewScreen() {
+    respond() {
         this.preview && this.preview.remove();
         this.preview = new Rect({
                 x: 170,
@@ -117,75 +49,68 @@ export default class RectPreferencesPanel {
                 width: 200,
                 height: 150
             })
-            .stroke('pink')
-            .strokeWidth(5)
-            .strokeOpacity(1)
-            .fill('green')
-            .fillOpacity(.5)
-            .radius(20, 20)
-            .affix(this.getPreviewPaper());
+            .stroke(this.strokeColor)
+            .strokeWidth(this.strokeWidth)
+            .strokeOpacity(this.strokeOpacity)
+            .strokeDash(this.strokeDash, this.strokeDash)
+            .fill(this.fillColor)
+            .fillOpacity(this.fillOpacity)
+            .radius(this.strokeRadius, this.strokeRadius)
+            .affix(this.getPaper());
+
+        this.publish('set_preference', {
+            from: 'RectPreferencesPanel',
+            fillColor: this.fillColor,
+            fillOpacity: this.fillOpacity,
+            strokeColor: this.strokeColor,
+            strokeWidth: this.strokeWidth,
+            strokeOpacity: this.strokeOpacity,
+            strokeDash: this.strokeDash,
+            strokeRadius: this.strokeRadius
+        });
     }
 
-    init() {
+    createInteraction() {
         const __self = this;
-
-        this.$view = document.createElement('div');
-        this.$view.className = `setting_item`;
-        this.$view.innerHTML = template;
-
-        this.$options = this.$view.querySelector('.options');
-        this.container.appendChild(this.$view);
-
-        this.addWatch();
-        this.initRefScreen();
-        this.updatePreviewScreen();
-
-        // stroke color picker
-        new ColorPicker({
-            el: this.$view.querySelector('.triangle_stroke_color'),
-            components: ['gradient']
-        }).onColorChange(color => {
-            this.strokeColor = color;
-        });
 
         // fill color picker
         new ColorPicker({
-            el: this.$view.querySelector('.triangle_fill_color'),
+            el: this.$view.querySelector('.rect_fill_color'),
             components: ['gradient']
         }).onColorChange(color => {
             this.fillColor = color;
         });
-
+        // range: fill_opacity
+        this.fillOpacityRange = this.container.querySelector('.rect_fill_opacity_range');
+        this.fillOpacityRange.oninput = function (e) {
+            __self.fillOpacity = this.value;
+        }
+        // stroke color picker
+        new ColorPicker({
+            el: this.$view.querySelector('.rect_stroke_color'),
+            components: ['gradient']
+        }).onColorChange(color => {
+            this.strokeColor = color;
+        });
+        // range: stroke_opacity
+        this.strokeOpacityRange = this.container.querySelector('.rect_stroke_opacity_range');
+        this.strokeOpacityRange.oninput = function (e) {
+            __self.strokeOpacity = this.value;
+        }
         // range: stroke_dash
-        this.strokeDashRange = this.container.querySelector('.triangle_stroke_dash_range');
+        this.strokeDashRange = this.container.querySelector('.rect_stroke_dash_range');
         this.strokeDashRange.oninput = function (e) {
             __self.strokeDash = this.value;
         }
-
         // range: stroke_width
-        this.strokeWidthRange = this.container.querySelector('.triangle_stroke_width_range');
+        this.strokeWidthRange = this.container.querySelector('.rect_stroke_width_range');
         this.strokeWidthRange.oninput = function (e) {
             __self.strokeWidth = this.value;
         }
-
-        // range: fill_opacity
-        this.fillOpacityRange = this.container.querySelector('.triangle_fill_opacity_range');
-        this.fillOpacityRange.oninput = function (e) {
-            __self.strokeOpacity = this.value;
+        // range: stroke_radius
+        this.strokeRadiusRange = this.container.querySelector('.rect_radius_width_range');
+        this.strokeRadiusRange.oninput = function (e) {
+            __self.strokeRadius = this.value;
         }
-    }
-
-    show() {
-        this.$view.style.display = 'block';
-        return this;
-    }
-
-    hide() {
-        this.$view.style.display = 'none';
-        return this;
-    }
-
-    getView() {
-        return this.$view;
     }
 }

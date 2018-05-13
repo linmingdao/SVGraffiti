@@ -20,8 +20,9 @@ function calDistance(x1, y1, x2, y2) {
 
 export default class EllipseBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
         this.setBusinessMode(EllipseBusiness.MODE.ELLIPSE);
     }
@@ -31,6 +32,10 @@ export default class EllipseBusiness extends SketchpadBaseClass {
         this.movePoint = null;
         this.shape = null;
         this.begingDraw = false;
+    }
+
+    getPreferenceValue(name) {
+        return this.context.getPreferenceValue(name, 'ellipse');
     }
 
     setBusinessMode(mode) {
@@ -64,11 +69,12 @@ export default class EllipseBusiness extends SketchpadBaseClass {
             this.shape = new Ellipse({})
                 .center(center.x, center.y)
                 .radius(hr, vr)
-                .fill('red')
-                .fillOpacity(.5)
-                .stroke('yellow')
-                .strokeWidth(2)
-                .strokeOpacity(1)
+                .fill(this.getPreferenceValue('fillColor'))
+                .fillOpacity(this.getPreferenceValue('fillOpacity'))
+                .stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
                 .affix(this.getSketchpad());
         }
     }

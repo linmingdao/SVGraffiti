@@ -43,8 +43,9 @@ function calBezierCtrlPoint(ps, i, a, b) {
 
 export default class CurveBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
         this.setBusinessMode(CurveBusiness.MODE.CURVE);
     }
@@ -63,6 +64,10 @@ export default class CurveBusiness extends SketchpadBaseClass {
 
     setBusinessMode(mode) {
         this.businessMode = mode;
+    }
+
+    getPreferenceValue(name, namespace = 'curve') {
+        return this.context.getPreferenceValue(name, namespace);
     }
 
     onmousedown(event) {
@@ -104,17 +109,17 @@ export default class CurveBusiness extends SketchpadBaseClass {
                         'd': this.pathChunk
                     })
                     .stroke('#fff')
-                    .strokeWidth(10)
+                    .strokeWidth(this.getPreferenceValue('size', 'eraser'))
+                    .strokeOpacity(this.getPreferenceValue('depth', 'eraser'))
                     .strokeLinecap(Path.LINECAP.ROUND)
-                    .strokeOpacity(1)
                     .affix(this.getSketchpad());
             } else {
                 // 绘制笔迹
                 this.shape = new Path({
                         'd': this.pathChunk
                     })
-                    .stroke('#21c863')
-                    .strokeWidth(3)
+                    .stroke(this.getPreferenceValue('strokeColor'))
+                    .strokeWidth(this.getPreferenceValue('strokeWidth'))
                     .strokeLinecap(Path.LINECAP.ROUND)
                     .strokeOpacity(.2)
                     .affix(this.getSketchpad());
@@ -150,20 +155,20 @@ export default class CurveBusiness extends SketchpadBaseClass {
                         'd': this.pathChunk
                     })
                     .stroke('#fff')
-                    .strokeWidth(10)
+                    .strokeWidth(this.getPreferenceValue('size', 'eraser'))
+                    .strokeOpacity(this.getPreferenceValue('depth', 'eraser'))
                     .strokeLinecap(Path.LINECAP.ROUND)
-                    .strokeOpacity(1)
                     .affix(this.getSketchpad());
+                    console.log(this.getPreferenceValue('size', 'eraser'))
             } else {
                 // 绘制整段曲线轨迹
                 this.shape = new Path({
                         'd': this.pathChunk
                     })
-                    .stroke('#21c863')
-                    .strokeWidth(3)
+                    .stroke(this.getPreferenceValue('strokeColor'))
+                    .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                    .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
                     .strokeLinecap(Path.LINECAP.ROUND)
-                    // .strokeDash(10, 10)
-                    .strokeOpacity(1)
                     .affix(this.getSketchpad());
             }
         }

@@ -1,5 +1,4 @@
-[
-    {
+[{
         "tag": "color_pallet",
         "icon": "/src/img/pallet.svg",
         "icon_active": "/src/img/pallet.svg",
@@ -49,13 +48,6 @@
         "local_preference": true
     },
     {
-        "tag": "polyline",
-        "icon": "/src/img/polyline.svg",
-        "icon_active": "/src/img/polyline_active.svg",
-        "type": "function",
-        "local_preference": true
-    },
-    {
         "tag": "eraser",
         "icon": "/src/img/eraser.svg",
         "icon_active": "/src/img/eraser_active.svg",
@@ -68,11 +60,5 @@
         "icon_active": "/src/img/empty.svg",
         "type": "resident_function",
         "local_preference": false
-    },
-    {
-        "tag": "setting",
-        "type": "global_preference",
-        "icon": "/src/img/setting.svg",
-        "icon_active": "/src/img/setting.svg"
     }
 ]

@@ -1,13 +1,18 @@
 import SketchpadBaseClass from '../SketchpadBaseClass';
 import {
-    Polygon
+    Rect
 } from '../../../supports/svg-stamper/stampers-mixin';
 
 export default class RectangleBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
+    }
+
+    getPreferenceValue(name) {
+        return this.context.getPreferenceValue(name, 'rect');
     }
 
     reset() {
@@ -15,6 +20,34 @@ export default class RectangleBusiness extends SketchpadBaseClass {
         this.movePoint = null;
         this.shape = null;
         this.begingDraw = false;
+    }
+
+    getRectStart() {
+        let startX, startY;
+        if (this.startPoint.x < this.movePoint.x && this.startPoint.y < this.movePoint.y) {
+            startX = this.startPoint.x;
+            startY = this.startPoint.y;
+        } else if (this.startPoint.x > this.movePoint.x && this.startPoint.y > this.movePoint.y) {
+            startX = this.movePoint.x;
+            startY = this.movePoint.y;
+        } else if (this.startPoint.x < this.movePoint.x && this.startPoint.y > this.movePoint.y) {
+            startX = this.startPoint.x;
+            startY = this.movePoint.y;
+        } else if (this.startPoint.x > this.movePoint.x && this.startPoint.y < this.movePoint.y) {
+            startX = this.movePoint.x;
+            startY = this.startPoint.y;
+        }
+        return {
+            x: startX,
+            y: startY
+        }
+    }
+
+    getRectSize() {
+        return {
+            width: Math.abs(this.startPoint.x - this.movePoint.x),
+            height: Math.abs(this.startPoint.y - this.movePoint.y)
+        }
     }
 
     onmousedown(event) {
@@ -31,17 +64,24 @@ export default class RectangleBusiness extends SketchpadBaseClass {
 
             this.movePoint = this.getPosition(event);
 
-            // 计算矩形折点
-            const points = [this.startPoint.x, this.startPoint.y, this.movePoint.x, this.startPoint.y, this.movePoint.x, this.movePoint.y, this.startPoint.x, this.movePoint.y, this.startPoint.x, this.startPoint.y];
+            // 计算矩形的宽高 与 起点
+            const size = this.getRectSize();
+            const rectStart = this.getRectStart();
 
             // 绘制新的矩形
-            this.shape = new Polygon({})
-                .stroke('black')
-                .fill('black')
-                .strokeOpacity(1)
-                .fillOpacity(.3)
-                .vertexs(points)
-                .strokeWidth(2)
+            this.shape = new Rect({
+                    x: rectStart.x,
+                    y: rectStart.y,
+                    width: size.width,
+                    height: size.height
+                })
+                .stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                .radius(this.getPreferenceValue('strokeRadius'), this.getPreferenceValue('strokeRadius'))
+                .fill(this.getPreferenceValue('fillColor'))
+                .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
+                .fillOpacity(this.getPreferenceValue('fillOpacity'))
                 .affix(this.getSketchpad());
         }
     }

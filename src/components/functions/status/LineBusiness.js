@@ -5,8 +5,9 @@ import {
 
 export default class LineBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
     }
 
@@ -15,6 +16,10 @@ export default class LineBusiness extends SketchpadBaseClass {
         this.endPoint = null;
         this.shape = null;
         this.begingDraw = false;
+    }
+
+    getPreferenceValue(name) {
+        return this.context.getPreferenceValue(name, 'line');
     }
 
     onmousedown(event) {
@@ -36,9 +41,10 @@ export default class LineBusiness extends SketchpadBaseClass {
                     x2: this.endPoint.x,
                     y2: this.endPoint.y
                 })
-                .stroke('#21c863')
+                .stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
                 .strokeLinecap(Line.LINECAP.ROUND)
-                .strokeDash(10, 10)
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
                 .strokeOpacity(.2)
                 .affix(this.getSketchpad());
         }
@@ -52,8 +58,10 @@ export default class LineBusiness extends SketchpadBaseClass {
                     y1: this.startPoint.y,
                     x2: this.endPoint.x,
                     y2: this.endPoint.y
-                })
-                .stroke('#21c863')
+                }).stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
+                .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
                 .strokeLinecap(Line.LINECAP.ROUND)
                 .affix(this.getSketchpad());
         }

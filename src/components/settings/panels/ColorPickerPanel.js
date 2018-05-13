@@ -1,20 +1,27 @@
 import ColorPicker from '../../../supports/colorpicker/ColorPicker';
+import Publisher from '../../../supports/pubsub/base/publisher';
 
-export default class ColorPickerPanel {
+export default class ColorPickerPanel extends Publisher {
 
     constructor(container) {
+        super();
         this.container = container;
-        this.init(container);
+        this.createInteraction();
     }
 
-    init() {
+    createInteraction() {
         this.$view = document.createElement('div');
         this.$view.className = `setting_item`;
 
-        this.clrPicker = new ColorPicker({
+        this.colorPicker = new ColorPicker({
             el: this.$view,
             components: ['presets', 'gradient', 'depth', 'operator']
-        });
+        }).onColorChange(color => {
+            this.publish('set_preference', {
+                from: 'ColorPickerPanel',
+                color: color
+            });
+        })
 
         this.container.appendChild(this.$view);
     }

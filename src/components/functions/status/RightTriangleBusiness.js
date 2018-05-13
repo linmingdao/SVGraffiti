@@ -5,8 +5,9 @@ import {
 
 export default class RightTriangleBusiness extends SketchpadBaseClass {
 
-    constructor(sketchpad) {
+    constructor(sketchpad, context) {
         super(sketchpad);
+        this.context = context;
         this.reset();
     }
 
@@ -15,6 +16,10 @@ export default class RightTriangleBusiness extends SketchpadBaseClass {
         this.movePoint = null;
         this.shape = null;
         this.begingDraw = false;
+    }
+
+    getPreferenceValue(name) {
+        return this.context.getPreferenceValue(name, 'triangle');
     }
 
     onmousedown(event) {
@@ -46,12 +51,13 @@ export default class RightTriangleBusiness extends SketchpadBaseClass {
 
             // 绘制新的直角三角形
             this.shape = new Polygon({})
-                .stroke('yellow')
-                .fill('pink')
-                .strokeOpacity(1)
-                .fillOpacity(.3)
+                .fill(this.getPreferenceValue('fillColor'))
+                .fillOpacity(this.getPreferenceValue('fillOpacity'))
+                .stroke(this.getPreferenceValue('strokeColor'))
+                .strokeWidth(this.getPreferenceValue('strokeWidth'))
+                .strokeOpacity(this.getPreferenceValue('strokeOpacity'))
+                .strokeDash(...this.getPreferenceValue('strokeDash'))
                 .vertexs([this.startPoint.x, this.startPoint.y], [this.movePoint.x, this.movePoint.y], [rightAngleVertex.x, rightAngleVertex.y])
-                .strokeWidth(2)
                 .affix(this.getSketchpad());
         }
     }
