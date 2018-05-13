@@ -67,6 +67,9 @@ export default class CurveBusiness extends SketchpadBaseClass {
     }
 
     getPreferenceValue(name, namespace = 'curve') {
+        if (namespace === 'curve' && this.context.getPreferenceValue('applyGloabal')) {
+            return this.context.getPreferenceValue(name);
+        }
         return this.context.getPreferenceValue(name, namespace);
     }
 
@@ -159,7 +162,7 @@ export default class CurveBusiness extends SketchpadBaseClass {
                     .strokeOpacity(this.getPreferenceValue('depth', 'eraser'))
                     .strokeLinecap(Path.LINECAP.ROUND)
                     .affix(this.getSketchpad());
-                    console.log(this.getPreferenceValue('size', 'eraser'))
+                console.log(this.getPreferenceValue('size', 'eraser'))
             } else {
                 // 绘制整段曲线轨迹
                 this.shape = new Path({

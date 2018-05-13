@@ -78,6 +78,7 @@ export default class Sketchpad extends Subscriber {
                 case 'ColorPickerPanel':
                     this.setPreferenceValue(entity.color, 'strokeColor');
                     this.setPreferenceValue(entity.color, 'fillColor');
+                    this.setPreferenceValue(entity.applyGloabal, 'applyGloabal');
                     break;
                 case 'LinePreferencesPanel':
                     this.setPreferenceValue(entity.strokeColor, 'strokeColor', 'line');

@@ -12,6 +12,9 @@ export default class RectangleBusiness extends SketchpadBaseClass {
     }
 
     getPreferenceValue(name) {
+        if (this.context.getPreferenceValue('applyGloabal')) {
+            return this.context.getPreferenceValue(name);
+        }
         return this.context.getPreferenceValue(name, 'rect');
     }
 

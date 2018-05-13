@@ -60,7 +60,7 @@ export default class ColorPicker {
             this.colorChangeCallback && this.colorChangeCallback(color);
         });
         this.operator && this.operator.onClickGlobalToggleButton(checked => {
-            console.log(`${checked?'应用于全局':'不应用于全局'}`);
+            this.globalToggleButtonCallback(checked);
         })
 
         return {

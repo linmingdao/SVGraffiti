@@ -13,13 +13,24 @@ export default class ColorPickerPanel extends Publisher {
         this.$view = document.createElement('div');
         this.$view.className = `setting_item`;
 
+        let color = '#000',
+            applyGloabal = false;
         this.colorPicker = new ColorPicker({
             el: this.$view,
             components: ['presets', 'gradient', 'depth', 'operator']
-        }).onColorChange(color => {
+        }).onColorChange(clr => {
+            color = clr;
             this.publish('set_preference', {
                 from: 'ColorPickerPanel',
-                color: color
+                color: color,
+                applyGloabal: applyGloabal
+            });
+        }).onClickGlobalToggleButton(isApplyGloabal => {
+            applyGloabal = isApplyGloabal;
+            this.publish('set_preference', {
+                from: 'ColorPickerPanel',
+                color: color,
+                applyGloabal: applyGloabal
             });
         })
 
