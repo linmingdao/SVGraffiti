@@ -20,7 +20,7 @@ const FUNCTIONS_CREATOR = {
     polygon: PolygonBusiness
 };
 
-@Topics(['function', 'set_preference'])
+@Topics(['function', 'resident_function', 'set_preference'])
 export default class Sketchpad extends Subscriber {
 
     constructor(sketchpad) {
@@ -30,6 +30,10 @@ export default class Sketchpad extends Subscriber {
         this.bindEvent();
         this.preferences = preferences;
         this.notify('function', 'curve');
+    }
+
+    empty() {
+        this.sketchpad.innerHTML = '';
     }
 
     getPreferenceValue(name, namespace = '') {
@@ -47,6 +51,12 @@ export default class Sketchpad extends Subscriber {
     }
 
     notify(topic, entity) {
+        if (topic === 'resident_function') {
+            if (entity === 'empty') {
+                this.empty();
+            }
+            return;
+        }
         if (topic === 'function') {
             if (entity === 'curve' || entity === 'eraser') {
                 if (!this.functionsPool['curve'] && !this.functionsPool['eraser']) {
