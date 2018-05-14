@@ -1,11 +1,11 @@
 {
     "applyGloabal": false,
     "strokeColor": "#000",
-    "strokeWidth": 5,
+    "strokeWidth": 3,
     "strokeOpacity": 1,
     "strokeDash": [0, 0],
     "fillColor": "#555",
-    "fillOpacity": 0.5,
+    "fillOpacity": 0.4,
     "eraser": {
         "size": 40,
         "depth": 1
