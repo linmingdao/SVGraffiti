@@ -5,7 +5,11 @@
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/functions.gif)
 
 ## 项目概况
->该项目是基于webpack@3.x.x构建的多页应用
+>1、目录结构说明：
+
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/directory_structure.png)
+
+>2、多页应用说明
 
 color picker组件测试页:
 
@@ -19,7 +23,7 @@ svg底层绘制api测试页:
 
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/page_stamper.png)
 
->npm i后执行npm run dev可以查看demo效果
+>3、npm i后执行npm run dev可以查看demo效果
 
 ## 近期动态
 
