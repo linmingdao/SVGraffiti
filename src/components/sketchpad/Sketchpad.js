@@ -50,6 +50,14 @@ export default class Sketchpad extends Subscriber {
         }
     }
 
+    /**
+     * 该接口由【PubSub消息管理中心】负责调用，画板组件在此接口处理接收到的消息类型
+     * 1、处理Toolbar组件发送的 “切换画板绘制状态” ，对应的消息类型为：“function”
+     * 2、处理Toolbar组件发送的 “清空绘制内容” ，对应的消息类型为：“resident_function”
+     * 3、处理Settings组件发送的 “设置画板绘制参数” ，对应的消息类型为：“set_preference”
+     * @param {String} topic 消息主题标识
+     * @param {Object} entity 消息实体对象
+     */
     notify(topic, entity) {
         if (topic === 'resident_function') {
             if (entity === 'empty') {

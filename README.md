@@ -4,6 +4,10 @@
 ## 效果预览
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/functions.gif)
 
+## 组件间通信
+
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/message_framework.png)
+
 ## 项目概况
 >1、目录结构说明：
 

@@ -65,8 +65,6 @@ export default class Settings extends SubScatterer {
     }
 
     notify(topic, entity) {
-        console.log(topic, entity);
-
         if (this.activedSetting) {
             this.activedSetting.show = false;
             this.activedSetting['item']['target'].hide();
