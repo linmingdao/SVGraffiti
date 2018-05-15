@@ -4,10 +4,6 @@
 ## 效果预览
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/functions.gif)
 
-## 组件间通信
-
-![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/message_framework.png)
-
 ## 项目概况
 >1、目录结构说明：
 
@@ -28,6 +24,10 @@ svg底层绘制api测试页:
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/page_stamper.png)
 
 >3、npm i后执行npm run dev可以查看demo效果
+
+## 组件间通信
+
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/message_framework.png)
 
 ## 近期动态
 
