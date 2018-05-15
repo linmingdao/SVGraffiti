@@ -1,6 +1,9 @@
 # SVGraffiti
 一个基于SVG的涂鸦组件
 
+## 如何运行
+>git clone -> npm i -> npm run dev
+
 ## 效果预览
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/color_picker.png)
 
@@ -29,8 +32,6 @@ color picker组件测试页:
 svg底层绘制api测试页:
 
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/page_stamper.png)
-
->3、npm i后执行npm run dev可以查看demo效果
 
 ## 组件间通信
 
