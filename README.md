@@ -2,6 +2,13 @@
 一个基于SVG的涂鸦组件
 
 ## 效果预览
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/color_picker.png)
+
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/curve.png)
+
+![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/ellipse.png)
+
+## 功能演示
 ![image](https://github.com/linmingdao/SVGraffiti/raw/master/screenshots/functions.gif)
 
 ## 项目概况
