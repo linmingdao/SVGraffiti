@@ -12,7 +12,6 @@
             background: none;
         }
     }
-
     +.tgl-btn {
         outline: 0;
         display: block;
@@ -29,20 +28,17 @@
             width: 50%;
             height: 100%;
         }
-
         &:after {
             left: 0;
         }
-
         &:before {
             display: none;
         }
     }
-
     &:checked+.tgl-btn:after {
         left: 50%;
     }
-} 
+}
 
 // themes
 .tgl-light {
@@ -57,7 +53,6 @@
             transition: all .2s ease;
         }
     }
-
     &:checked+.tgl-btn {
         background: #9FD6AE;
     }
@@ -73,16 +68,12 @@
         &:after {
             border-radius: 2em;
             background: #fbfbfb;
-            transition: left .3s cubic-bezier( 0.175, 0.885, 0.320, 1.275),
-            padding .3s ease, margin .3s ease;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, .1),
-            0 4px 0 rgba(0, 0, 0, .08);
+            transition: left .3s cubic-bezier( 0.175, 0.885, 0.320, 1.275), padding .3s ease, margin .3s ease;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 4px 0 rgba(0, 0, 0, .08);
         }
-
         &:hover:after {
             will-change: padding;
         }
-
         &:active {
             box-shadow: inset 0 0 0 2em #e8eae9;
             &:after {
@@ -90,9 +81,8 @@
             }
         }
     }
-
     &:checked+.tgl-btn {
-        background: #86d993;
+        background: #25c04e;
         &:active {
             box-shadow: none;
             &:after {
@@ -123,17 +113,14 @@
             color: #fff;
             text-shadow: 0 1px 0 rgba(0, 0, 0, .4);
         }
-
         &:after {
             left: 100%;
             content: attr(data-tg-on);
         }
-
         &:before {
             left: 0;
             content: attr(data-tg-off);
         }
-
         &:active {
             background: #888;
             &:before {
@@ -141,17 +128,14 @@
             }
         }
     }
-
     &:checked+.tgl-btn {
         background: #86d993;
         &:before {
             left: -100%;
         }
-
         &:after {
             left: 0;
         }
-
         &:active:after {
             left: 10%;
         }
@@ -172,7 +156,6 @@
             border-radius: 1em;
         }
     }
-
     &:checked+.tgl-btn {
         border: 4px solid #7FC6A6;
         &:after {
@@ -204,34 +187,28 @@
             backface-visibility: hidden;
             border-radius: 4px;
         }
-
         &:after {
             content: attr(data-tg-on);
             background: #02C66F;
             transform: rotateY(-180deg);
         }
-
         &:before {
             background: #FF3A19;
             content: attr(data-tg-off);
         }
-
         &:active:before {
             transform: rotateY(-20deg);
         }
     }
-
     &:checked+.tgl-btn {
         &:before {
             transform: rotateY(180deg);
         }
-
         &:after {
             transform: rotateY(0);
             left: 0;
             background: #7FC6A6;
         }
-
         &:active:after {
             transform: rotateY(20deg);
         }

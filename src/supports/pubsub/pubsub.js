@@ -56,25 +56,23 @@ export default class PubSub {
         topics[topic].push(subscriber);
     }
 
-    // /**
-    //  * 根据token删除对应的订阅者
-    //  * @param token 
-    //  */
-    // static removeSubscriber(subscriber) {
-    //     var subs = [];
-    //     // 遍历所有主题下的订阅者列表，将对应订阅者删除
-    //     const topics = PubSub.topics;
-    //     Object.keys(topics).forEach(topic => {
-    //         topics[topic]
-    //     });
-    //     for (let topic in topics) {
-    //         for (let i = 0; i < topics[topic].length; ++i) {
-    //             if (token === topics[topic][i].token) {
-    //                 break;
-    //             }
-    //         }
-    //         subs.push(topics[topic].splice(i, 1));
-    //     }
-    //     return subs;
-    // }
+    /**
+     * 删除对应的订阅者
+     * @param subscriber 
+     */
+    static removeSubscriber(subscriber) {
+        const subs = [];
+        // 遍历所有主题下的订阅者列表，将对应订阅者删除
+        const topics = PubSub.topics;
+        Object.keys(topics).forEach(topicName => {
+            const topic = topics[topicName];
+            for (let i = 0; i < topic.length; ++i) {
+                if (topic[i] === subscriber) {
+                    subs.push(topics[topic].splice(i, 1));
+                    break;
+                }
+            }
+        });
+        return subs;
+    }
 }

@@ -15,18 +15,20 @@
     div.settings_box {
         position: absolute;
         right: 0;
-        top: 0; // width: 500px;
+        top: 0;
         max-height: 100%;
-        background-color: #dcdbdb;
-        overflow-y: auto; // overflow-x: hidden;
-        // border-bottom-left-radius: 10px;
-        // border-top-left-radius: 10px;
+        background: -moz-linear-gradient(left, #f5dfd3, #e1e2f1);
+        /*Mozilla*/
+        background: -webkit-gradient(linear, 0 50%, 100% 50%, from(#f5dfd3), to(#e1e2f1));
+        /*Old gradient for webkit*/
+        background: -webkit-linear-gradient(left, #f5dfd3, #e1e2f1);
+        /*new gradient for Webkit*/
+        background: -o-linear-gradient(left, #f5dfd3, #e1e2f1);
+        overflow-y: auto;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
         div.setting_item {
-            // width: 100%;
-            // height: 400px;
-            // box-sizing: border-box;
-            // background-color: #807676;
-            margin: 10px; // border: 1px solid #fff;
+            margin: 10px;
         }
     }
 }

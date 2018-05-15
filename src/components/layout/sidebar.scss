@@ -1,6 +1,13 @@
 // 侧边工具栏
 .sidebar {
-    background-color: #dcdbdb;
+    background: -moz-linear-gradient(left, #e1e2f1, #f5dfd3);
+    /*Mozilla*/
+    background: -webkit-gradient(linear, 0 50%, 100% 50%, from(#e1e2f1), to(#f5dfd3));
+    /*Old gradient for webkit*/
+    background: -webkit-linear-gradient(left, #e1e2f1, #f5dfd3);
+    /*new gradient for Webkit*/
+    background: -o-linear-gradient(left, #e1e2f1, #f5dfd3);
+    /*Opera11*/
     width: 112px;
     height: 100%;
     float: right;
@@ -18,8 +25,8 @@
             display: block;
             width: 100%;
             height: 100%;
-            border: 4px solid #fff;
-            border-radius: 12px;
+            border: 3px solid #fff;
+            border-radius: 20px;
             box-sizing: border-box;
             background-repeat: no-repeat;
             background-position-x: center;
@@ -49,7 +56,7 @@
         cursor: pointer;
     }
     div.item.enabled {
-        background-color: #c1ecf3;
+        background-color: #25c04e;
         a.cornermark {
             background-image: url('../../img/cornermark.svg');
         }
